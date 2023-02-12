@@ -1,0 +1,111 @@
+{
+	"name": "Spleeter",
+	"type": "Empty",
+	"path": "Custom",
+	
+	"version": "1.0.0",
+	"description": "Music separation by Deezer / Spleeter.
+	The models available are:
+    Vocals (singing voice) / accompaniment separation (2 stems)
+    Vocals / drums / bass / other separation (4 stems)
+    Vocals / drums / bass / piano / other separation (5 stems)
+ ",
+	"url":"",
+	"downloadURL": "",
+	"hasInput": true,
+	"hasOutput": true, 
+	"hideDefaultCommands": false,
+
+	"parameters": {
+		
+		"Spleeter Params":{
+			"type": "Container",
+			"description":"Spleeter global parameters",
+			"collapsed": false,
+			"Spleeter Info": {
+				"type": "Trigger",
+				"description": "Click to see documentation"
+			},
+			"Spleeter command": { 
+				"type": "File", 
+				"description": "Command to execute",
+				"default":"D:/Spleeter_Portable_Python-3.10.5_ x64/Python-Launcher.exe"
+			},
+			"Spleeter options": {
+				"type": "String", 
+				"description": "Command options ",
+				"default":"-m spleeter separate"
+			},			
+			"Output Folder": { 
+				"type": "File", 
+				"description": "Spleeter output folder name. 
+	This one will store the separate audio file output.
+	If left blank, will be set to audio_output under temp location."
+			},
+			"Asynch": { 
+				"type": "Boolean", 
+				"description": "Run in non blocking mode (asynchronus).
+	If you want to load result, you just need to re-execute command after first one is finished.",
+				"default":false
+			},			
+			"Force": { 
+				"type": "Boolean", 
+				"description": "To optimize the process, Spleeter will check if an already separation file exist and re-use it.
+	This parameter will force spleeter to execute and overwrite existing files. ",
+				"default":false
+			},			
+			"Verbose": { 
+				"type": "Boolean", 
+				"description": "Check to have verbose informations from Spleeter running process. ",
+				"default":true
+			}
+		}
+	},
+	"values": {	
+	},
+	"scripts": [
+		"Spleeter.js"
+	],
+	"commands": {
+		
+		"Separate":
+		{
+			"menu":"Spleeter",
+			"callback":"RunSpleeter",
+			"parameters":{
+				"sequence":{
+					"type":"Target",
+					"description": "Select filePath from the Sequence / AudioClip  to separate.
+Result will be shown on the existing sequence",
+					"allowedTypes":["File"]
+				},
+				"File name":{
+					"type":"File",
+					"description": "Select mp3 audio file to separate.
+Result will create new sequence."					
+				},				
+				"Model to use": {
+					"type": "Enum",
+					"description": "
+Vocals (singing voice) / accompaniment separation (2 stems)
+Vocals / drums / bass / other separation (4 stems)
+Vocals / drums / bass / piano / other separation (5 stems)
+
+All the previous models (spleeter:2stems, spleeter:4stems and spleeter:5stems) performs separation up to 11kHz.
+There also exists 16kHz versions of the same models (resp. (spleeter:2stems-16kHz, spleeter:4stems-16kHz and spleeter:5stems-16kHz)).
+",
+					"readOnly": false,
+					"options": {
+						"2 stems":"spleeter:2stems",
+						"4 stems":"spleeter:4stems",
+						"5 stems":"spleeter:5stems",
+						"2 stems 16kHz":"spleeter:2stems-16kHz",
+						"4 stems 16kHz":"spleeter:4stems-16kHz",
+						"5 stems 16kHz":"spleeter:5stems-16kHz"
+						
+					}
+				}
+			}
+		}
+	}
+}
