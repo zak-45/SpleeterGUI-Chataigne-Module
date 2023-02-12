@@ -10,6 +10,10 @@ Need python 3 / spleeter & tensorflow modules / ffmpeg
 
 This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 90 seconds to separate 3'30" audio track.
 
+![image](https://user-images.githubusercontent.com/121941293/218341418-6566eae2-6e99-4a71-ab5e-c13528a73cf9.png)
+![image](https://user-images.githubusercontent.com/121941293/218341436-ee280cd5-8d38-4ad7-b7d2-bed3641bc831.png)
+
+
 ### ***Installation :***
 
 Manual
