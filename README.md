@@ -64,7 +64,11 @@ On Inspector:
 
 
 ```
-On Command Tester, Spleeter: all SpleeterGUI available commands
+On Command Tester, Spleeter: all SpleeterGUI available commands.
+	separate : execute the command / options set in Parameters for audio track separate
+		* sequence : audio clip file path from an existing sequence. Take in priority if set.
+		* file : mp3 audio file name.
+		* Model to use : select 2 / 4 or 5 stems
 ```
 ![image](https://user-images.githubusercontent.com/121941293/218341957-5ce0c2dc-a228-48d2-b15c-571a334032a2.png)
 
@@ -72,6 +76,7 @@ On Command Tester, Spleeter: all SpleeterGUI available commands
 ### -- INFO --
 This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 70 seconds to separate 3'30" audio track.Second run should be faster anymore.
 
+Spleeer WIKI : https://github.com/deezer/spleeter/wiki/2.-Getting-started
 
 ```
 If you want the look and feel of the first screenshots, just use the spleeter.noisette file and the spleeter_bg.png provided.
