@@ -73,6 +73,10 @@ On Command Tester, Spleeter: all SpleeterGUI available commands.
 ```
 ![image](https://user-images.githubusercontent.com/121941293/218341957-5ce0c2dc-a228-48d2-b15c-571a334032a2.png)
 
+```
+ Example after a 5 stems execution:
+```
+![image](https://user-images.githubusercontent.com/121941293/218443314-f2a20a5a-7beb-400d-81ec-988c7686a60a.png)
 
 ### -- INFO --
 This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 70 seconds to separate 3'30" audio track.Second run should be faster anymore.
