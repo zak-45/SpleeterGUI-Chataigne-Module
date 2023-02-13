@@ -8,8 +8,17 @@ GitHub: https://github.com/benkuper/Chataigne
 ### *** Prerequest ***
 Need python 3 / spleeter & tensorflow modules / ffmpeg
 
-For Win users, portable version has been setup, no need to install, only extract on some folder:
-https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/download/v1.0.0.0/Spleeter_Portable_Python-3.10.5_.x64.exe
+> Spleeter : https://github.com/deezer/spleeter/wiki/1.-Installation
+> 
+> Portable Python for Win : https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.10/
+> 
+> ffmpeg for Win : https://github.com/BtbN/FFmpeg-Builds/releases
+
+For Win users, portable version has been setup with all prerequest.
+> No need to install, only extract on some folder:
+> https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/download/v1.0.0.0/Spleeter_Portable_Python-3.10.5_.x64.exe
+
+For others OS, you need to follow the prerequest.
 
 
 ![image](https://user-images.githubusercontent.com/121941293/218341418-6566eae2-6e99-4a71-ab5e-c13528a73cf9.png)
@@ -20,7 +29,7 @@ https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/download/v1.0.0.
 
 Manual
 ```
-Copy this folder to :
+Copy this repository to :
 <MyDocuments>/Chataigne/modules/Spleeter
 ```
 
