@@ -83,6 +83,7 @@ This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, n
 
 Not all spleeter features has been implemented. Focus has been set to the separate. SpleeterGUI need a mp3 file as input and produce a wav file as result. 
 
+All others command can be excuted by using spleeter command line.
 Spleeer WIKI : https://github.com/deezer/spleeter/wiki/2.-Getting-started
 
 ```
