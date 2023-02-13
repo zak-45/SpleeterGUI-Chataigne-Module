@@ -54,7 +54,8 @@ On Command Tester, Spleeter: all Spleeter available commands
 
 
 ### -- INFO --
-This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 90 seconds to separate 3'30" audio track.
+This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 70 seconds to separate 3'30" audio track.Second run should be faster anymore.
+
 
 ```
 If you want the look and feel of the first screenshots, just use the spleeter.noisette file and the spleeter_bg.png provided.
