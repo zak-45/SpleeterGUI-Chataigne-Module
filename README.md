@@ -46,10 +46,17 @@ Go to Modules, right click, Custom, Spleeter.
 ```
 On Inspector:
 	Spleeter command: command to execute
-	Spleeter options : options to pass to the command.	    
-	OutputFolder :Folder where to store separate audio tracks.
+		This is the full path for the command to launch. Need to be adapted to your needs/ installation.
+	Spleeter options : options to pass to the command
+		Options that will be passed to the executed command.
+	OutputFolder :Folder where to store separate audio tracks
+		This one will store the separate audio file output
+		If left blank, will be set to audio_output under temp location.
 	Asynch : select to run the command in asynchronus mode.
-	Force : force command execution.
+		By default, command will be executed as 'blocking', this mean Chataigne will wait end of execution before continue.
+	Force : force command execution
+		To optimize the process, SpleeterGUI will check if an already separation file exist and re-use it
+		This parameter will force spleeter to execute and overwrite existing files.
 	Verbose : provide more informations during command running.
 ```
 
@@ -57,7 +64,7 @@ On Inspector:
 
 
 ```
-On Command Tester, Spleeter: all Spleeter available commands
+On Command Tester, Spleeter: all SpleeterGUI available commands
 ```
 ![image](https://user-images.githubusercontent.com/121941293/218341957-5ce0c2dc-a228-48d2-b15c-571a334032a2.png)
 
