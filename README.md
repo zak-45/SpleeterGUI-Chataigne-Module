@@ -2,6 +2,7 @@
 Spleeter GUI for Chataigne. Deezer separation tool &amp; models
 
 GUI Front end for Spleeter - AI source separation
+![image](https://user-images.githubusercontent.com/121941293/218340772-35ed90bb-fc21-40e5-9da1-e142fc963955.png)
 
 This project will make it easy for users to run Spleeter without needing to use the command line tools to do so.
 Built-in Chataigne audio feature will provide you all necessary to see/test the result with few clicks. 
@@ -11,7 +12,7 @@ This should work on all OS where Chataigne/Spleeter are supported. Windows users
 Official Website : http://benjamin.kuperberg.fr/chataigne/en
  GitHub: https://github.com/benkuper/Chataigne
 
-![image](https://user-images.githubusercontent.com/121941293/218340772-35ed90bb-fc21-40e5-9da1-e142fc963955.png)
+
 
 ### *** Prerequest ***
 Need python 3 / spleeter & tensorflow modules / ffmpeg
