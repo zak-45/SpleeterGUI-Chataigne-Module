@@ -5,7 +5,7 @@ GUI Front end for Spleeter - AI source separation
 
 This project will make it easy for users to run Spleeter without needing to use the command line tools to do so.
 Built-in Chataigne audio feature will provide you all necessary to see/test the result with few clicks.
-This should work on all OS where Chataigne/Spleeter are supported.
+This should work on all OS where Chataigne/Spleeter are supported.windows users can have it running in few minutes.
 
 Official Website : http://benjamin.kuperberg.fr/chataigne/en
  GitHub: https://github.com/benkuper/Chataigne
