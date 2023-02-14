@@ -1,6 +1,9 @@
 # SpleeterGUI-Chataigne-Module
 Spleeter GUI for Chataigne. Deezer separation tool &amp; models
 
+Official Website : http://benjamin.kuperberg.fr/chataigne/en
+ GitHub: https://github.com/benkuper/Chataigne
+
 GUI Front end for Spleeter - AI source separation
 ![image](https://user-images.githubusercontent.com/121941293/218340772-35ed90bb-fc21-40e5-9da1-e142fc963955.png)
 
@@ -8,10 +11,6 @@ This project will make it easy for users to run Spleeter without needing to use 
 Built-in Chataigne audio feature will provide you all necessary to see/test the result with few clicks. 
 You should be able to hear the song without bass, drums , vocals etc ...or only one of them.
 This should work on all OS where Chataigne/Spleeter are supported. Windows users can have it running in few minutes.
-
-Official Website : http://benjamin.kuperberg.fr/chataigne/en
- GitHub: https://github.com/benkuper/Chataigne
-
 
 
 ### *** Prerequest ***
