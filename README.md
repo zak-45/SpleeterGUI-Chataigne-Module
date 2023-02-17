@@ -10,7 +10,9 @@ GUI Front end for Spleeter - AI source separation
 This project will make it easy for users to run Spleeter without needing to use the command line tools to do so.
 Built-in Chataigne audio feature will provide you all necessary to see/test the result with few clicks. 
 You should be able to hear the song without bass, drums , vocals etc ...or only one of them.
-This should work on all OS where Chataigne/Spleeter are supported. Windows users can have it running in few minutes.
+This should work on all OS where Chataigne/Spleeter are supported. 
+
+Windows users can have it running in few minutes.
 
 ### *** Videos DEMO ***
 
@@ -103,6 +105,7 @@ This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, n
 Not all spleeter features has been implemented. Focus has been set to the separate. SpleeterGUI need a mp3 file as input and produce a wav file as result. 
 
 All others commands can be executed by using spleeter command line if necessary.
+
 Spleeter WIKI : https://github.com/deezer/spleeter/wiki/2.-Getting-started
 
 ```
