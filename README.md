@@ -16,16 +16,14 @@ Windows users can have it running in few minutes.
 
 ### *** Videos DEMO ***
 
+https://user-images.githubusercontent.com/121941293/219706114-4a899a6c-35b6-47ac-8f9e-27b58ce189e4.mp4
 > 2 stems
 
-https://user-images.githubusercontent.com/121941293/219706114-4a899a6c-35b6-47ac-8f9e-27b58ce189e4.mp4
 
 
-
- > 5 stems
 
 https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e-ab5a-a6f25eb83d60.mp4
-
+> 5 stems
 
 ### *** Prerequest ***
 Need python 3 / spleeter & tensorflow modules / ffmpeg
