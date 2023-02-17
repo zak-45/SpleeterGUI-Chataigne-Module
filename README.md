@@ -12,6 +12,13 @@ Built-in Chataigne audio feature will provide you all necessary to see/test the 
 You should be able to hear the song without bass, drums , vocals etc ...or only one of them.
 This should work on all OS where Chataigne/Spleeter are supported. Windows users can have it running in few minutes.
 
+### *** Videos DEMO ***
+
+> 2 Stems
+
+https://user-images.githubusercontent.com/121941293/219706114-4a899a6c-35b6-47ac-8f9e-27b58ce189e4.mp4
+
+
 
 ### *** Prerequest ***
 Need python 3 / spleeter & tensorflow modules / ffmpeg
