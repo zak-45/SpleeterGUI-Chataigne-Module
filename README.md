@@ -32,6 +32,7 @@ Need python 3 / spleeter & tensorflow modules / ffmpeg
 > 
 > Portable Python for Win : https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.10/
 > 
+> ffmpeg download : https://ffmpeg.org/download.html
 > ffmpeg for Win : https://github.com/BtbN/FFmpeg-Builds/releases
 
 For Win users, portable version has been setup with all prerequest.
