@@ -38,6 +38,7 @@
 			},			
 			"Output Folder": { 
 				"type": "File", 
+				"directoryMode": true,
 				"description": "Spleeter output folder name. 
 	This one will store the separate audio file output.
 	If left blank, will be set to audio_output under temp location."
