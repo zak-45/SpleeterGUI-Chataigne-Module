@@ -87,7 +87,7 @@ On Inspector:
 ```
 On Command Tester, Spleeter: all SpleeterGUI available commands.
 	separate : execute the command / options set in Parameters for audio track separate
-		* sequence : audio clip file path from an existing sequence. Take in priority if set.
+		* sequence : audioclip file path from an existing sequence (with audio file enveloppe)  . Take in priority if set.
 		* file : mp3 audio file name.
 		* Model to use : select 2 / 4 or 5 stems
 ```
