@@ -76,9 +76,13 @@
 			"parameters":{
 				"sequence":{
 					"type":"Target",
+					"root" : "root.sequences",					
 					"description": "Select filePath from the Sequence / AudioClip  to separate.
 Result will be shown on the existing sequence",
-					"allowedTypes":["File"]
+					"allowedTypes":["File"],
+					"targetType" : "controllable",
+					"showParameters": false,
+					"showTriggers": false
 				},
 				"File name":{
 					"type":"File",
