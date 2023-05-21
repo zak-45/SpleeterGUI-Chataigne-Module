@@ -271,6 +271,16 @@ function runSpleeter (sequence, targetFile, model)
 			script.log('command to run : '+ spleeterCMDName + exeOPT);
 			// we execute the Spleeter command in blocking mode to wait end of execution;
 			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
+			
+		} else {
+			
+			splOutputOptions = "ffprobeOnly";
+
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose;
+			script.log('command to run : '+ spleeterCMDName + exeOPT);
+			// we execute the Spleeter command file for only ffprobe
+			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);			
+			
 		}
 
 		// set sequence to artist name /audio to title

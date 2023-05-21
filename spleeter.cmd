@@ -10,4 +10,4 @@ cd %WINPYDIRBASE%
 
 ffprobe -show_format -print_format json %6 > %TMP%/spleeterfileinfo.json
 
-spleeter.exe %1 %2 %3 %4 %5 %6 %7 %8 %9
+if NOT %1 == "ffprobeOnly" spleeter.exe %1 %2 %3 %4 %5 %6 %7 %8 %9
