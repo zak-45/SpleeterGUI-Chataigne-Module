@@ -3,7 +3,7 @@
 	"type": "Empty",
 	"path": "Custom",
 	
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Music separation by Deezer / Spleeter.
 	Need python / tensorflow / ffmpeg
 	The models available are:
@@ -30,12 +30,12 @@
 			"Spleeter command": { 
 				"type": "File", 
 				"description": "Command to execute",
-				"default":"D:/Spleeter_Portable_Python-3.10.5_ x64/Python-Launcher.exe"
+				"default":"spleeter.cmd"
 			},
 			"Spleeter options": {
 				"type": "String", 
 				"description": "Command options ",
-				"default":"-m spleeter separate"
+				"default":" separate "
 			},			
 			"Output Folder": { 
 				"type": "File", 
@@ -44,12 +44,6 @@
 	This one will store the separate audio file output.
 	If left blank, will be set to audio_output under temp location."
 			},
-			"Asynch": { 
-				"type": "Boolean", 
-				"description": "Run in non blocking mode (asynchronus).
-	If you want to load result, you just need to re-execute command after first one is finished.",
-				"default":false
-			},			
 			"Force": { 
 				"type": "Boolean", 
 				"description": "To optimize the process, Spleeter will check if an already separation file exist and re-use it.
@@ -73,7 +67,7 @@
 		"Separate":
 		{
 			"menu":"Spleeter",
-			"callback":"RunSpleeter",
+			"callback":"Spleeter",
 			"parameters":{
 				"sequence":{
 					"type":"Target",

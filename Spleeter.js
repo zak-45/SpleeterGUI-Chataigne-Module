@@ -2,7 +2,7 @@
 
 author:	zak45
 date:	07/02/2023
-version:1.0.0
+version:1.1.0
 
 Chataigne Module for  Deezer /spleeter
 
@@ -16,17 +16,21 @@ Need python / tensorflow // ffmpeg
 
 // Main module parameters 
 
-// spleeter exe file name (required)
-var SpleeterExeName = "spleeter.exe";
+var shouldProcessSpl = false;
+var homeDIR = "";
+var winHOME = "";
+
+// spleeter cmd file name (required)
+var spleeterCMDName = "spleeter.cmd";
 
 // CMD options
-var SPLoutputOptions = "-m spleeter separate ";
+var splOutputOptions = " separate ";
 
 // verbose
 var verbose = " -verbose";
 
 // Output folder location, if blank, set it to audio_output
-var SPLoutputFolder = "audio_output";
+var splOutputFolder = "audio_output";
 
 // stems 
 var SPLstems = "spleeter:2stems";
@@ -37,11 +41,8 @@ var tempDIR = "";
 // info
 var moreinfo = "";
 
-// asynchronus mode
-var asynch = false;
-
 // increase timeout as we want to run Spleeter in synchronus way (blocking)
-script.setExecutionTimeout(180);
+script.setExecutionTimeout(240);
 
 //We create necessary entries in modules & sequences. We need OS / sound card and  Sequence with Trigger / Audio.
 function init()
@@ -49,13 +50,8 @@ function init()
 
 	script.log("-- Custom command called init()");	
 
-	var infos = util.getOSInfos(); 
-	
-	script.log("Hello "+infos.username);	
-	script.log("We run under : "+infos.name);
-
 	// we check required TMP folder
-	SpleeterTMP();
+	spleeterTMP();
 	script.log("Temp folder : "+tempDIR);
 	if (tempDIR == "")
 	{
@@ -99,13 +95,35 @@ function init()
 		var newTSequence = newSequence.layers.addItem("Trigger");
 		var newASequence = newSequence.layers.addItem("Audio");			
 	}
+
+	var infos = util.getOSInfos(); 
+	script.log("Hello "+infos.username);	
+	script.log("We run under : "+infos.name);
 	
+	if ( infos.name.contains("Win") )
+	{
+		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents";
+		winHOME = util.getEnvironmentVariable("USERPROFILE");
+		
+	} else {
+		
+		homeDIR = util.getEnvironmentVariable("$HOME");
+	}
+	
+	local.parameters.spleeterParams.spleeterCommand.set(homeDIR+"/Chataigne/modules/Spleeter/spleeter.cmd");
 }
 
 // execution depend on the user response
 function messageBoxCallback (id, result)
 {
 	script.log("Message box callback : "+id+" : "+result); 	
+	if ( id == "confirmSpleeter" )
+	{		
+		if ( result == 1 )
+		{
+			shouldProcessSpl = true;
+		}		
+	}		
 }
 
 function scriptParameterChanged (param)
@@ -128,267 +146,270 @@ function moduleValueChanged (value)
 }
 
 
-// Run Spleeter: wait and read output folder files to create audio entry into sequence
-function RunSpleeter (sequence, targetFile, model)
+function update()
 {
-	// check to see if something to do
-	if (sequence == "" && targetFile == "" )
+	// start long pocess on it's own thread to run in blocking mode but not block the main UI
+	if(shouldProcessSpl)
+	{
+		shouldProcessSpl = false;
+		runSpleeter (sequence, targetFile, model);
+	}
+
+}
+
+// check to see if something to do
+function Spleeter (insequence, intargetFile, inmodel)
+{
+	if (insequence == "" && intargetFile == "" )
 	{
 		script.log('Nothing to do');
 		
 	} else {
-	
-			// Spleeter command	
-			SpleeterExeName = local.parameters.spleeterParams.spleeterCommand.getAbsolutePath();
-			// check to see if Spleeter exe exist
-			if (util.fileExists(SpleeterExeName) == 1)
-				{
-				// options to add
-				SPLoutputOptions = local.parameters.spleeterParams.spleeterOptions.get();
+		
+		sequence = insequence;
+		targetFile = intargetFile;
+		model = inmodel;
+		
+		util.showYesNoCancelBox("confirmSpleeter", "This Should take a while", "Do you want to continue ?", "warning", "Yes", "No", "Don't care...");
+		
+	}
+}
 
-				// result output folder
-				SPLoutputFolder = local.parameters.spleeterParams.outputFolder.get();
-				// if output folder not set, we set it as default
-				if (SPLoutputFolder == "")
-				{						
-					SPLoutputFolder =  tempDIR + "/" + "audio_output";
-				}			
-				
-				SPLstems = model;
-				
-				// we have some work to do, target first else file 
-				if (sequence.contains("/"))
-				{
-					script.log('Retreive data from sequence : ' + sequence);
-					var splitseq = sequence.split("/");
-					var sequenceName = splitseq[2];
-					var audioName = splitseq[4];
-					// set newSequence to existing one
-					var newSequence =  root.sequences.getItemWithName(sequenceName);
-					// set newAudio to existing one 
-					newAudio =  newSequence.layers.getItemWithName(audioName);
-					// targetFile
-					var targetFile = newAudio.clips.audioClip.filePath.getAbsolutePath();
-					script.log('Target file  from sequence : ' + targetFile);								
-							
-				} else if (targetFile != ""){
+// Run Spleeter: wait and read output folder files to create audio entry into sequence
+function runSpleeter (sequence, targetFile, model)
+{
+	// Spleeter command	
+	spleeterCMDName = local.parameters.spleeterParams.spleeterCommand.getAbsolutePath();
+	// check to see if Spleeter exe exist
+	if (util.fileExists(spleeterCMDName) == 1)
+		{
+		// options to add
+		splOutputOptions = local.parameters.spleeterParams.spleeterOptions.get();
 
-					script.log('Create new sequence from filename :'+targetFile);
-					// create new sequence / audio clip 
-					var newSequence =  root.sequences.addItem('Sequence');	
-					newAudio =  newSequence.layers.addItem('Audio');
-					var newAudioClip =  newAudio.clips.addItem('audioClip');	
-					newAudioClip.filePath.set(targetFile);
+		// result output folder
+		splOutputFolder = local.parameters.spleeterParams.outputFolder.get();
+		// if output folder not set, we set it as default
+		if (splOutputFolder == "")
+		{						
+			splOutputFolder =  tempDIR + "/" + "audio_output";
+		}			
+		
+		SPLstems = model;
+		
+		// we have some work to do, target first else file 
+		if (sequence.contains("/"))
+		{
+			script.log('Retreive data from sequence : ' + sequence);
+			var splitseq = sequence.split("/");
+			var sequenceName = splitseq[2];
+			var audioName = splitseq[4];
+			// set newSequence to existing one
+			var newSequence =  root.sequences.getItemWithName(sequenceName);
+			// set newAudio to existing one 
+			newAudio =  newSequence.layers.getItemWithName(audioName);
+			// targetFile
+			var targetFile = newAudio.clips.audioClip.filePath.getAbsolutePath();
+			script.log('Target file  from sequence : ' + targetFile);								
 					
-				} else {
-					
-					script.logError("Something wrong with Spleeter....");
-					return;
-				}
-				
-				// set audio name
-				var songname = getFilename(targetFile).replace(".mp3","");
-				newAudio.setName(songname);
-				
-				// check to see if separation files already exist 
-				var vocals = util.fileExists(SPLoutputFolder + "/" + songname + "/vocals.wav");
-				if (model.contains("spleeter:2stems"))
-				{
-					script.log("Check files for 2 stems");
-					
-					var accompaniment = util.fileExists(SPLoutputFolder + "/" + songname +  "/accompaniment.wav");
-					
-				} else if ( model.contains("spleeter:4stems") || model.contains("spleeter:5stems")){
-					
-					script.log("Check files for 4/5 stems");
+		} else if (targetFile != ""){
 
-					var drums = util.fileExists(SPLoutputFolder + "/" + songname +  "/drums.wav");
-					var bass = util.fileExists(SPLoutputFolder + "/" + songname +  "/bass.wav");
-					var other = util.fileExists(SPLoutputFolder + "/" + songname +  "/other.wav");
-					
-				}
-				if ( model.contains("spleeter:5stems") )
-				{
-					
-					script.log("Check files for 5 stems");
+			script.log('Create new sequence from filename :'+targetFile);
+			// create new sequence / audio clip 
+			var newSequence =  root.sequences.addItem('Sequence');	
+			newAudio =  newSequence.layers.addItem('Audio');
+			var newAudioClip =  newAudio.clips.addItem('audioClip');	
+			newAudioClip.filePath.set(targetFile);
+			
+		} else {
+			
+			script.logError("Something wrong with Spleeter....");
+			return;
+		}
+		
+		// get audio name
+		var songname = getFilename(targetFile).replace(".mp3","");
+		
+		// check to see if separation files already exist 
+		var vocals = util.fileExists(splOutputFolder + "/" + songname + "/vocals.wav");
+		if (model.contains("spleeter:2stems"))
+		{
+			script.log("Check files for 2 stems");
+			
+			var accompaniment = util.fileExists(splOutputFolder + "/" + songname +  "/accompaniment.wav");
+			
+		} else if ( model.contains("spleeter:4stems") || model.contains("spleeter:5stems")){
+			
+			script.log("Check files for 4/5 stems");
 
-					var piano = util.fileExists(SPLoutputFolder + "/" + songname + "/piano.wav");
-				}
-				
-				// run spleeter only on Force or missing file
-				if ((local.parameters.spleeterParams.force.get() == 1) || 
-					(model.contains("spleeter:2stems") && (vocals == 0 ||accompaniment == 0)) ||
-					((model.contains("spleeter:4stems") || model.contains("spleeter:5stems")) && (drums == 0 || bass == 0 || other == 0)) ||
-					(model.contains("spleeter:5stems") && piano == 0))
-				{							
-					// run Spleeter 
-					if (local.parameters.spleeterParams.verbose.get() == 1)
-					{
-						verbose = "--verbose";
-					} else {
-						verbose = "";
-					}
-					var exeOPT = " " + SPLoutputOptions + " -o " + '"' + SPLoutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose;
-					script.log('command to run : '+ SpleeterExeName + exeOPT);
-					// we execute the Spleeter command. Need to use os.launchApp to avoid security problem on Windows.
-					var launchresult = root.modules.os.launchApp(SpleeterExeName, exeOPT);
-
-					// Loop to wait process finished before continue. only if asynch false
-					asynch = local.parameters.spleeterParams.asynch.get();
-					if (asynch == 0)
-					{
-						moreinfo = "synchro mode";
-						util.showMessageBox("Spleeter  ! ", "This could take a while ...."+moreinfo, "info", "Got it");
-						var wait = true;
-						for ( ;wait === true; )
-						{
-							var isRunning = root.modules.os.isProcessRunning(getFilename(SpleeterExeName));
-							if (isRunning)
-							{
-								wait = true;
-								util.delayThreadMS(2000);
-							} else {
-								wait = false;
-							}
-						}
-						
-					} else {
-						
-						moreinfo = "Asynchronus mode. you need to re-execute to reload data if you want to see them.";
-						util.showMessageBox("Spleeter  ! ", "This could take a while ...."+moreinfo, "info", "Got it");
-					}
-				}
-
-				// read the result 
-				script.log("we read from : " + SPLoutputFolder);
-				var newtargetFile = SPLoutputFolder + "/" + songname + "/vocals.wav";
-				
-				// vocals is common file to all stems
-				var newvocals = util.fileExists(newtargetFile);				
-				if (newvocals)
-				{
-					script.log('vocal file exist:' + newtargetFile);
-					
-					newAudio =  newSequence.layers.addItem('Audio');
-					var newAudioClip =  newAudio.clips.addItem('audioClip');	
-					newAudioClip.filePath.set(newtargetFile);		
-					newAudio.setName("vocals");
-					
-				} else {
-					
-					script.log('vocal file do not exist :' + newtargetFile);
-				}
-
-				if (model.contains("spleeter:2stems"))
-				{
-					script.log("Check files for 2 stems");
-					
-					// instrumental file 
-					var newtargetFile = SPLoutputFolder + "/" + songname + "/accompaniment.wav";					
-					var newaccompaniment = util.fileExists(newtargetFile);
-					if (newaccompaniment)
-					{
-						script.log('accompaniment file exist:' + newtargetFile);
-						
-						newAudio =  newSequence.layers.addItem('Audio');
-						var newAudioClip =  newAudio.clips.addItem('audioClip');	
-						newAudioClip.filePath.set(newtargetFile);		
-						newAudio.setName("accompaniment");
-					
-					} else {
-						
-						script.log('accompaniment file do not exist :' + newtargetFile);
-					}
-					
-				} else if (model.contains("spleeter:4stems") || model.contains("spleeter:5stems")) {
-
-					script.log("Check files for 4/5 stems");
-					
-					// bass common for 4 or 5
-					var newtargetFile = SPLoutputFolder + "/" + songname + "/bass.wav";
-					var newbass = util.fileExists(newtargetFile);
-					if (newbass)
-					{
-						script.log('bass file exist:' + newtargetFile);
-						
-						newAudio =  newSequence.layers.addItem('Audio');
-						var newAudioClip =  newAudio.clips.addItem('audioClip');	
-						newAudioClip.filePath.set(newtargetFile);		
-						newAudio.setName("bass");
-					
-					} else {
-						
-						script.log('bass file do not exist :' +newtargetFile);
-					}
-					
-					// drums common for 4 or 5
-					var newtargetFile = SPLoutputFolder + "/" + songname + "/drums.wav";
-					var newdrums = util.fileExists(newtargetFile);
-					if (newdrums)
-					{
-						script.log('drums file exist:' +newtargetFile);
-						
-						newAudio =  newSequence.layers.addItem('Audio');
-						var newAudioClip =  newAudio.clips.addItem('audioClip');	
-						newAudioClip.filePath.set(newtargetFile);		
-						newAudio.setName("drums");
-					
-					} else {
-						
-						script.log('drums file do not exist :' + newtargetFile);
-					}
-
-					// other common for 4 or 5
-					var newtargetFile = SPLoutputFolder + "/" + songname + "/other.wav";
-					var newother = util.fileExists(newtargetFile);				
-					if (newother)
-					{
-						script.log('other file exist:' + newtargetFile);
-						
-						newAudio =  newSequence.layers.addItem('Audio');
-						var newAudioClip =  newAudio.clips.addItem('audioClip');	
-						newAudioClip.filePath.set(newtargetFile);		
-						newAudio.setName("other");
-					
-					} else {
-						
-						script.log('other file do not exist :' + newtargetFile);
-					}
-				}
-				
-				if ( model.contains("spleeter:5stems"))
-				{
-					script.log("Check files for 5 stems");
-					
-					// piano for 5 stems
-					var newtargetFile = SPLoutputFolder + "/" + songname + "/piano.wav";
-					var newpiano = util.fileExists(newtargetFile);				
-					if (newpiano)
-					{
-						script.log('piano file exist:' + newtargetFile);
-						
-						newAudio =  newSequence.layers.addItem('Audio');
-						var newAudioClip =  newAudio.clips.addItem('audioClip');	
-						newAudioClip.filePath.set(newtargetFile);		
-						newAudio.setName("piano");
-					
-					} else {
-						
-						script.log('piano file do not exist :' + newtargetFile);
-					}
-				}			
-
-			} else {
-				
-				script.log("Spleeter  app not found");				
-				util.showMessageBox("Spleeter  !", "spleeter not found", "warning", "OK");
+			var drums = util.fileExists(splOutputFolder + "/" + songname +  "/drums.wav");
+			var bass = util.fileExists(splOutputFolder + "/" + songname +  "/bass.wav");
+			var other = util.fileExists(splOutputFolder + "/" + songname +  "/other.wav");
 			
 		}
+		if ( model.contains("spleeter:5stems") )
+		{
+			
+			script.log("Check files for 5 stems");
+
+			var piano = util.fileExists(splOutputFolder + "/" + songname + "/piano.wav");
+		}
+		
+		// run spleeter only on Force or missing file
+		if ((local.parameters.spleeterParams.force.get() == 1) || 
+			(model.contains("spleeter:2stems") && (vocals == 0 ||accompaniment == 0)) ||
+			((model.contains("spleeter:4stems") || model.contains("spleeter:5stems")) && (drums == 0 || bass == 0 || other == 0)) ||
+			(model.contains("spleeter:5stems") && piano == 0))
+		{							
+			// run Spleeter 
+			if (local.parameters.spleeterParams.verbose.get() == 1)
+			{
+				verbose = "--verbose";
+			} else {
+				verbose = "";
+			}
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose;
+			script.log('command to run : '+ spleeterCMDName + exeOPT);
+			// we execute the Spleeter command in blocking mode to wait end of execution;
+			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
+		}
+
+		// set sequence to artist name /audio to title
+		newSequence.setName(readMp3Tags("artist"));
+		newAudio.setName(readMp3Tags("title"));
+		
+		// read the result 
+		script.log("we read from : " + splOutputFolder);
+		var newtargetFile = splOutputFolder + "/" + songname + "/vocals.wav";
+		
+		// vocals is common file to all stems
+		var newvocals = util.fileExists(newtargetFile);				
+		if (newvocals)
+		{
+			script.log('vocal file exist:' + newtargetFile);
+			
+			newAudio =  newSequence.layers.addItem('Audio');
+			var newAudioClip =  newAudio.clips.addItem('audioClip');	
+			newAudioClip.filePath.set(newtargetFile);		
+			newAudio.setName("vocals");
+			
+		} else {
+			
+			script.log('vocal file do not exist :' + newtargetFile);
+			script.logError("Something wrong with Spleeter....");
+		}
+
+		if (model.contains("spleeter:2stems"))
+		{
+			script.log("Check files for 2 stems");
+			
+			// instrumental file 
+			var newtargetFile = splOutputFolder + "/" + songname + "/accompaniment.wav";					
+			var newaccompaniment = util.fileExists(newtargetFile);
+			if (newaccompaniment)
+			{
+				script.log('accompaniment file exist:' + newtargetFile);
+				
+				newAudio =  newSequence.layers.addItem('Audio');
+				var newAudioClip =  newAudio.clips.addItem('audioClip');	
+				newAudioClip.filePath.set(newtargetFile);		
+				newAudio.setName("accompaniment");
+			
+			} else {
+				
+				script.log('accompaniment file do not exist :' + newtargetFile);
+			}
+			
+		} else if (model.contains("spleeter:4stems") || model.contains("spleeter:5stems")) {
+
+			script.log("Check files for 4/5 stems");
+			
+			// bass common for 4 or 5
+			var newtargetFile = splOutputFolder + "/" + songname + "/bass.wav";
+			var newbass = util.fileExists(newtargetFile);
+			if (newbass)
+			{
+				script.log('bass file exist:' + newtargetFile);
+				
+				newAudio =  newSequence.layers.addItem('Audio');
+				var newAudioClip =  newAudio.clips.addItem('audioClip');	
+				newAudioClip.filePath.set(newtargetFile);		
+				newAudio.setName("bass");
+			
+			} else {
+				
+				script.log('bass file do not exist :' +newtargetFile);
+			}
+			
+			// drums common for 4 or 5
+			var newtargetFile = splOutputFolder + "/" + songname + "/drums.wav";
+			var newdrums = util.fileExists(newtargetFile);
+			if (newdrums)
+			{
+				script.log('drums file exist:' +newtargetFile);
+				
+				newAudio =  newSequence.layers.addItem('Audio');
+				var newAudioClip =  newAudio.clips.addItem('audioClip');	
+				newAudioClip.filePath.set(newtargetFile);		
+				newAudio.setName("drums");
+			
+			} else {
+				
+				script.log('drums file do not exist :' + newtargetFile);
+			}
+
+			// other common for 4 or 5
+			var newtargetFile = splOutputFolder + "/" + songname + "/other.wav";
+			var newother = util.fileExists(newtargetFile);				
+			if (newother)
+			{
+				script.log('other file exist:' + newtargetFile);
+				
+				newAudio =  newSequence.layers.addItem('Audio');
+				var newAudioClip =  newAudio.clips.addItem('audioClip');	
+				newAudioClip.filePath.set(newtargetFile);		
+				newAudio.setName("other");
+			
+			} else {
+				
+				script.log('other file do not exist :' + newtargetFile);
+			}
+		}
+		
+		if ( model.contains("spleeter:5stems"))
+		{
+			script.log("Check files for 5 stems");
+			
+			// piano for 5 stems
+			var newtargetFile = splOutputFolder + "/" + songname + "/piano.wav";
+			var newpiano = util.fileExists(newtargetFile);				
+			if (newpiano)
+			{
+				script.log('piano file exist:' + newtargetFile);
+				
+				newAudio =  newSequence.layers.addItem('Audio');
+				var newAudioClip =  newAudio.clips.addItem('audioClip');	
+				newAudioClip.filePath.set(newtargetFile);		
+				newAudio.setName("piano");
+			
+			} else {
+				
+				script.log('piano file do not exist :' + newtargetFile);
+			}
+		}			
+
+		moreinfo = newSequence.name;
+		util.showMessageBox("Spleeter !", "Process finished for : " + moreinfo, "information", "OK");
+
+	} else {
+		
+		script.log("Spleeter  cmd  not found");				
+		util.showMessageBox("Spleeter  !", "spleeter not found", "warning", "OK");	
+		script.logError("Something wrong with Spleeter....");
 	}
 }
 
 // retreive temp location
-function SpleeterTMP ()
+function spleeterTMP ()
 {
 	script.log("Retreive temp folder");
 	// TMP, TMPDIR, and TEMP environment variables 
@@ -411,6 +432,7 @@ function SpleeterTMP ()
 	}
 	
 	script.log('ERROR temp directory not found');
+	script.logError("Something wrong with Spleeter....");
 	
 return tempDIR;
 }
@@ -424,12 +446,40 @@ function getFilename(songname)
 return filename		
 }
 
+// retreive tags from json file (generated by ffprobe)
+function readMp3Tags(type)
+{
+	var tag = "";
+	
+	if (util.fileExists(tempDIR + "/spleeterfileinfo.json"))
+	{
+		var SCAJSONContent = util.readFile(tempDIR + "/spleeterfileinfo.json",true);
+		if ( type == "artist" )
+		{
+			tag = SCAJSONContent.format.tags.artist;
+		} else if ( type == "album" ){
+			tag = SCAJSONContent.format.tags.album;
+		} else if ( type == "title" ){
+			tag = SCAJSONContent.format.tags.title;
+		} else if ( type == "date"  ){
+			tag = SCAJSONContent.format.tags.date;
+		} else {
+			tag = "undefined";
+		}
+		
+	} else {
+	
+		tag = "undefined";
+		script.log('File does not exist : ' + tempDIR+"/spleeterfileinfo.json");
+	
+	}
+	
+return tag;	
+}
+
 
 // used for value/expression testing .......
 function testScript(songname)
 {
-
 	script.log("test");
-
-		
 }
