@@ -74,8 +74,6 @@ On Inspector:
 	OutputFolder :Folder where to store separate audio tracks
 		This one will store the separate audio file output
 		If left blank, will be set to audio_output under temp location.
-	Asynch : select to run the command in asynchronus mode.
-		By default, command will be executed as 'blocking', this mean Chataigne will wait end of execution before continue.
 	Force : force command execution
 		To optimize the process, SpleeterGUI will check if an already separation file exist and re-use it
 		This parameter will force spleeter to execute and overwrite existing files.
