@@ -52,6 +52,7 @@ Manual
 ```
 Copy this repository to :
 <MyDocuments>/Chataigne/modules/Spleeter
+nota: name need to be 'Spleeter'
 ```
 
 ### ***Use it :***
