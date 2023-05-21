@@ -52,7 +52,7 @@ Manual
 ```
 Copy this repository to :
 <MyDocuments>/Chataigne/modules/Spleeter
-nota: name need to be 'Spleeter'
+nota: name must be 'Spleeter'
 ```
 
 ### ***Use it :***
