@@ -9,7 +9,7 @@ Chataigne Module for  Deezer /spleeter
 This will separate audio file into stems ( 2 / 4 / 5 )
 work with mp3 file.
 Mainly used to separate vocals from a song.
-Need python / tensorflow // ffmpeg
+Need python / tensorflow // ffmpeg ffprobe
 
 
 */
@@ -19,6 +19,10 @@ Need python / tensorflow // ffmpeg
 var shouldProcessSpl = false;
 var homeDIR = "";
 var winHOME = "";
+var	sequence = "";
+var	targetFile = "";
+var	model = "";
+
 
 // spleeter cmd file name (required)
 var spleeterCMDName = "spleeter.cmd";
@@ -33,13 +37,10 @@ var verbose = " -verbose";
 var splOutputFolder = "audio_output";
 
 // stems 
-var SPLstems = "spleeter:2stems";
+var splStems = "spleeter:2stems";
 
 // TEMP dir (required)
 var tempDIR = "";
-
-// info
-var moreinfo = "";
 
 // increase timeout as we want to run Spleeter in synchronus way (blocking)
 script.setExecutionTimeout(240);
@@ -194,7 +195,7 @@ function runSpleeter (sequence, targetFile, model)
 			splOutputFolder =  tempDIR + "/" + "audio_output";
 		}			
 		
-		SPLstems = model;
+		splStems = model;
 		
 		// we have some work to do, target first else file 
 		if (sequence.contains("/"))
@@ -213,7 +214,7 @@ function runSpleeter (sequence, targetFile, model)
 					
 		} else if (targetFile != ""){
 
-			script.log('Create new sequence from filename :'+targetFile);
+			script.log('Create new sequence from filename :' + targetFile);
 			// create new sequence / audio clip 
 			var newSequence =  root.sequences.addItem('Sequence');	
 			newAudio =  newSequence.layers.addItem('Audio');
@@ -222,6 +223,7 @@ function runSpleeter (sequence, targetFile, model)
 			
 		} else {
 			
+			script.log('not able to create start point');
 			script.logError("Something wrong with Spleeter....");
 			return;
 		}
@@ -267,7 +269,7 @@ function runSpleeter (sequence, targetFile, model)
 			} else {
 				verbose = "";
 			}
-			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose;
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);
 			// we execute the Spleeter command in blocking mode to wait end of execution;
 			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
@@ -276,7 +278,7 @@ function runSpleeter (sequence, targetFile, model)
 			
 			splOutputOptions = "ffprobeOnly";
 
-			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose;
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);
 			// we execute the Spleeter command file for only ffprobe
 			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);			
@@ -407,8 +409,7 @@ function runSpleeter (sequence, targetFile, model)
 			}
 		}			
 
-		moreinfo = newSequence.name;
-		util.showMessageBox("Spleeter !", "Process finished for : " + moreinfo, "information", "OK");
+		util.showMessageBox("Spleeter !", "Process finished for : " + newSequence.name, "information", "OK");
 
 	} else {
 		
