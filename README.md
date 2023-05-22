@@ -36,8 +36,8 @@ Need python 3 / spleeter & tensorflow modules / ffmpeg
 > ffmpeg for Win : https://github.com/BtbN/FFmpeg-Builds/releases
 
 For Win users, portable version has been setup with all prerequest.
-> No need to install, only extract on some folder:
-> https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/download/v1.0.0.0/Spleeter_Portable_Python-3.10.5_.x64.exe
+> 
+>(https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases)
 
 For others OS, you need to follow the prerequest.
 
