@@ -1,5 +1,5 @@
 # SpleeterGUI-Chataigne-Module
-Spleeter GUI for Chataigne. Deezer separation tool &amp; models
+Spleeter GUI by Chataigne. Deezer separation tool &amp; models
 
 Official Website : http://benjamin.kuperberg.fr/chataigne/en
  GitHub: https://github.com/benkuper/Chataigne
