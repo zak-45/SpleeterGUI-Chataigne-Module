@@ -28,10 +28,10 @@ https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e
 ### *** Prerequest ***
 Need python 3 / spleeter & tensorflow modules / ffmpeg
 ```
-pip install joblib==1.2.0
-pip install numpy==1.22.0
-pip install tensorflow==2.12.0
-pip install spleeter==2.3.2
+pip3 install joblib==1.2.0
+pip3 install numpy==1.22.0
+pip3 install tensorflow==2.12.0
+pip3 install spleeter==2.3.2
 ```
 > Spleeter : https://github.com/deezer/spleeter/wiki/1.-Installation
 should install required python modules
