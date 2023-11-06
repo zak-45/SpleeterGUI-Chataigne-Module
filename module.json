@@ -3,7 +3,7 @@
 	"type": "Empty",
 	"path": "Custom",
 	
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Music separation by Deezer / Spleeter.
 	Need python / tensorflow / ffmpeg
 	The models available are:
@@ -35,7 +35,7 @@
 			"Spleeter options": {
 				"type": "String", 
 				"description": "Command options ",
-				"default":" separate "
+				"default":" separate -c mp3 "
 			},			
 			"Output Folder": { 
 				"type": "File", 
