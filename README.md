@@ -1,11 +1,10 @@
-![image](https://user-images.githubusercontent.com/121941293/283798323-94bb9a2c-65b0-4d98-a483-e49d4d9b0eb1.png)
+[![image](https://user-images.githubusercontent.com/121941293/283798323-94bb9a2c-65b0-4d98-a483-e49d4d9b0eb1.png)](http://benjamin.kuperberg.fr/chataigne/en)
 
 # SpleeterGUI-Chataigne-Module
-Spleeter GUI by Chataigne. Deezer separation tool &amp; models
 
-Chataigne Website : http://benjamin.kuperberg.fr/chataigne/en
+**Spleeter GUI** by Chataigne. Deezer separation tool &amp; models
 
-GUI Front end for Spleeter - AI source separation
+**GUI Front end for Spleeter - AI source separation**
 ![image](https://user-images.githubusercontent.com/121941293/218340772-35ed90bb-fc21-40e5-9da1-e142fc963955.png)
 
 This project will make it easy for users to run Spleeter without needing to use the command line tools to do so.
