@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e
 > 5 stems
 
 ### *** Prerequest ***
-Need python 3 / spleeter & tensorflow modules / ffmpeg
+Need python 3 (3.10.x x64)/ spleeter & tensorflow modules / ffmpeg
 ```
 pip3 install joblib==1.2.0
 pip3 install numpy==1.22.0
