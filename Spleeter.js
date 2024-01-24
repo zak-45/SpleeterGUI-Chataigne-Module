@@ -2,7 +2,7 @@
 
 author:	zak45
 date:	07/02/2023
-version:1.2.0
+version:1.3.0
 
 Chataigne Module for  Deezer /spleeter
 
@@ -299,7 +299,7 @@ function runSpleeter (sequence, targetFile, model)
 			
 		} else {
 			
-			splOutputOptions = "ffprobeOnly";
+			splOutputOptions = "ffprobeOnly for info";
 
 			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);

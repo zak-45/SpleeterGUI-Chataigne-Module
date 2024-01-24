@@ -4,7 +4,7 @@ Rem need to be adapted depend on the running OS, this one is for Win
 Rem will receive these parameters on entry " " + SPLoutputOptions + " -o " + '"' + SPLoutputFolder + '" -p ' +  SPLstems+' "' + targetFile + '" ' + verbose
 Rem which will give " separate -c mp3 -o audio_output -p spleeter:2stems audio_example.mp3 --verbose" for example
 
-call "%USERPROFILE%\Documents\Chataigne\xtra\PySpleeter\WPy64-31090\scripts\env_for_icons.bat"
+call "%USERPROFILE%\Documents\Chataigne\xtra\PySpleeter\WPy64-310111\scripts\env_for_icons.bat"
 
 cd %WINPYDIRBASE%
 
