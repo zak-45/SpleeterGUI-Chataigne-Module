@@ -68,44 +68,6 @@ function init()
 		util.showMessageBox("Spleeter  !", "TMP, TMPDIR or TEMP env variable not found", "warning", "OK");
 	}
 	
-	// modules  test
-	var OSexist = root.modules.getItemWithName("OS");
-	var SCexist = root.modules.getItemWithName("Sound Card");
-	var SPLexist = root.modules.getItemWithName("Spleeter");	
-
-	if (SCexist.name == "soundCard" || SPLexist.name == "spleeter")
-	{	
-		script.log("Module Sound Card exist");
-		
-	} else {
-			
-		var newSCModule = root.modules.addItem("Sound Card"); 		
-	}
-	
-	if (OSexist.name == "os")
-	{
-		script.log("Module OS exist");
-		
-	} else {
-			
-		var newOSModule = root.modules.addItem("OS");
-			
-	}
-	
-	// test sequence
-	var SQexist = root.sequences.getItemWithName("Sequence");
-	
-	if (SQexist.name == "sequence")
-	{
-		script.log("Sequences Sequence exist");
-		
-	} else {
-
-		var newSequence = root.sequences.addItem();
-		var newTSequence = newSequence.layers.addItem("Trigger");
-		var newASequence = newSequence.layers.addItem("Audio");			
-	}
-
 	var infos = util.getOSInfos(); 
 	script.log("Hello "+infos.username);	
 	script.log("We run under : "+infos.name);
@@ -119,42 +81,9 @@ function init()
 		
 		homeDIR = util.getEnvironmentVariable("$HOME");
 	}
-}
-
-/*
-// execution depend on the user response
-function messageBoxCallback (id, result)
-{
-	script.log("Message box callback : "+id+" : "+result); 	
-	if ( id == "confirmSpleeter" )
-	{		
-		if ( result == 1 )
-		{
-			shouldProcessSpl = true;
-		}		
-	}		
-}
-
-*/
-
-
-function scriptParameterChanged (param)
-{
-	script.log("Script Param changed : "+param.name);	
-}
-
-function moduleParameterChanged (param)
-{
-	script.log("Module Param changed : "+param.name);	
-	if (param.name == "spleeterInfo") {
-			
-			util.gotoURL('https://research.deezer.com/projects/spleeter.html');
-	}
-}
-
-function moduleValueChanged (value) 
-{	
-	script.log("Module value changed : "+value);	
+	
+	//
+	script.setUpdateRate(1);	
 }
 
 function update()
@@ -163,6 +92,45 @@ function update()
 	if (isInit)
 	{
 		isInit = false;
+					
+		// modules  test
+		var OSexist = root.modules.getItemWithName("OS");
+		var SCexist = root.modules.getItemWithName("Sound Card");
+		var SPLexist = root.modules.getItemWithName("Spleeter");	
+
+		if (SCexist.name == "soundCard" || SPLexist.name == "spleeter")
+		{	
+			script.log("Module Sound Card exist");
+			
+		} else {
+				
+			var newSCModule = root.modules.addItem("Sound Card"); 		
+		}
+		
+		if (OSexist.name == "os")
+		{
+			script.log("Module OS exist");
+			
+		} else {
+				
+			var newOSModule = root.modules.addItem("OS");
+				
+		}
+		
+		// test sequence
+		var SQexist = root.sequences.getItemWithName("Sequence");
+		
+		if (SQexist.name == "sequence")
+		{
+			script.log("Sequences Sequence exist");
+			
+		} else {
+
+			var newSequence = root.sequences.addItem();
+			var newTSequence = newSequence.layers.addItem("Trigger");
+			var newASequence = newSequence.layers.addItem("Audio");			
+		}
+			
 		local.parameters.spleeterParams.spleeterCommand.set(homeDIR+"/Chataigne/modules/Spleeter/spleeter.cmd");
 		if (SCAexist.name == "sCAnalyzer")
 		{	
@@ -187,6 +155,26 @@ function update()
 		}		
 	}
 }
+
+function scriptParameterChanged (param)
+{
+	script.log("Script Param changed : "+param.name);	
+}
+
+function moduleParameterChanged (param)
+{
+	script.log("Module Param changed : "+param.name);	
+	if (param.name == "spleeterInfo") {
+			
+			util.gotoURL('https://research.deezer.com/projects/spleeter.html');
+	}
+}
+
+function moduleValueChanged (value) 
+{	
+	script.log("Module value changed : "+value);	
+}
+
 
 // check to see if something to do
 function Spleeter (insequence, intargetFile, inmodel)
