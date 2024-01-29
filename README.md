@@ -39,7 +39,12 @@ should install required python modules
 see this for ffmpeg:
 > ffmpeg download : https://ffmpeg.org/download.html
 
-For Win users, portable version has been setup with all prerequest.
+Win user can use winget:
+> winget install ffmpeg
+>
+
+
+For Win users, portable version has been setup with all prerequest (except ffmpeg).
 > 
 >[Win Installer](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases)
 
@@ -61,7 +66,7 @@ nota: name must be 'Spleeter'
 Win users can use the portable version with all pre-requests
 > 
 >[Win Installer](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases)
-
+> nota: you steel need to have ffmpeg installed
 
 ### ***Use it :***
 
