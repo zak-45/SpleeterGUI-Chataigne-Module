@@ -131,7 +131,8 @@ function update()
 			var newASequence = newSequence.layers.addItem("Audio");			
 		}
 			
-		local.parameters.spleeterParams.spleeterCommand.set(homeDIR+"/Chataigne/modules/Spleeter/spleeter.cmd");
+		// local.parameters.spleeterParams.spleeterCommand.set(homeDIR+"/Chataigne/modules/Spleeter/spleeter.cmd");
+		
 		if (SCAexist.name == "sCAnalyzer")
 		{	
 			script.log("SCAnalyzer present");
