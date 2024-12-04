@@ -48,7 +48,7 @@ jobs:
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
             powershell -command "Expand-Archive python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
           else
-            unzip python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
+            unzip python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
           fi
         shell: bash
 
