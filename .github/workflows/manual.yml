@@ -73,6 +73,18 @@ jobs:
           New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
         shell: powershell
 
+      - name: Verify Windows Long Path Support
+        if: runner.os == 'Windows'
+        run: |
+          $LongPathsEnabled = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled"
+          if ($LongPathsEnabled.LongPathsEnabled -ne 1) {
+            Write-Error "Failed to enable Windows Long Path support"
+            exit 1
+          } else {
+            Write-Output "Windows Long Path support enabled successfully"
+          }
+        shell: powershell
+
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
