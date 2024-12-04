@@ -77,9 +77,9 @@ jobs:
       - name: Extract Portable Python
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
-            powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}"
+            powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
           else
-            unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
+            unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
           fi
         shell: bash
 
@@ -87,12 +87,12 @@ jobs:
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
               echo "Adding to PATH"
-              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\bin" >> $GITHUB_PATH
-              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_PATH
+              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\bin" >> $GITHUB_PATH
+              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_PATH
           else
               echo "Adding to PATH"
-              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
-              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
+              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
+              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
           fi
         shell: bash
 
@@ -108,9 +108,9 @@ jobs:
       - name: Zip directory
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              powershell -command "Compress-Archive -Path spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
+              powershell -command "Compress-Archive -Path sp-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
           else
-              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
+              zip -r sp-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
           fi
         shell: bash
 
