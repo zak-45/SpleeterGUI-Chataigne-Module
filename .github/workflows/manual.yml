@@ -88,6 +88,7 @@ jobs:
               powershell -command "Compress-Archive -Path spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
           else
               zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
+          fi
         shell: bash
 
       - name: Upload Release Asset
