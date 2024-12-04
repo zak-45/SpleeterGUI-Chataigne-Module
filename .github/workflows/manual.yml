@@ -86,7 +86,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{runner.os}} ${{ env.ARCHITECTURE }} Build
+          name: ${{ matrix.os_name }}-${{ matrix.os_arch }} Build
           if-no-files-found: warn
           overwrite: true
           include-hidden-files: true
