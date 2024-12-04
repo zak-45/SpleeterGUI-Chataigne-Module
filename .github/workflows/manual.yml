@@ -1,0 +1,172 @@
+# Cross-compile workflow that is manually triggered
+
+name: Cross Compile Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      mytag:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Input Tag'
+        # Default value if no value is explicitly provided
+        default: '0.0.0.0'
+        # Input has to be provided for the workflow to run
+        required: true
+        # The data type of the input
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        os: [macos-13, macos-latest, ubuntu-latest, windows-latest]
+    env:
+      DEBUG_COMPILATION: yes
+      COMP_VERSION: ${{github.event.inputs.mytag}}
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: kenchan0130/actions-system-info@master
+        id: system-info
+
+      - name: Get current time
+        uses: josStorer/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD-HH
+          utcOffset: "+02:00"
+
+      - name: Check-out repository
+        uses: actions/checkout@v4
+
+      - name: Windows specific
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo "ARCHITECTURE=amd64" >> $GITHUB_ENV
+
+      - name: Ubuntu specific
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+          sudo apt-get install ffmpeg
+          ARCHITECTURE=$(uname -m)
+          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+
+      - name: MacOS specific Apple
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install portaudio
+          brew reinstall libsndfile
+          ARCHITECTURE=$(uname -m)
+          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+
+      - name: MacOS specific Intel
+        if: matrix.os == 'macos-13'
+        run: |
+          brew update
+          brew install portaudio
+          brew reinstall libsndfile
+          ARCHITECTURE=$(uname -m)
+          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+
+      - name: Setup Python x64
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' # Version range or exact version of a Python version to use
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements*.txt
+
+      - name: Add version info to json file
+        env:
+          GitRun: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
+        run: |
+            echo '{"version": "${{env.COMP_VERSION}}","gitrun": "${{env.GitRun}}","date": "${{ steps.current-time.outputs.time }}","name": "${{ steps.system-info.outputs.name }}","platform": "${{ steps.system-info.outputs.platform }}","release": "${{ steps.system-info.outputs.release }}","python":"${{env.Python_ROOT_DIR}}","youtube_disable":"${{env.YOUTUBE_DISABLE}}","debug_compilation":"${{env.DEBUG_COMPILATION}}"}' > ./assets/version-${{ steps.system-info.outputs.platform }}.json
+
+      - name: Ubuntu specific bis
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0 gir1.2-webkit2-4.1         
+          sudo apt-get install gstreamer1.0-plugins-bad
+
+      - name: Install Dependencies for All
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build Executable for ${{runner.os}}
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: WLEDLipSync.py
+          company-name: zak-45
+          product-version: ${{github.event.inputs.mytag}}
+          file-version: ${{github.event.inputs.mytag}}
+          enable-plugins: tk-inter
+          windows-console-mode: disable
+          deployment: true
+          windows-icon-from-ico: assets/favicon.ico
+          macos-app-icon: assets/favicon.ico
+          onefile-tempdir-spec: ./WLEDLipSync
+          output-file: WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}
+          include-package-data: |
+            nicegui
+            ytmusicapi
+
+          include-module: |
+            pygments.formatters.html
+            taglib
+
+          include-data-files: |
+            favicon.ico=favicon.ico
+            splash-screen.png=splash-screen.png
+
+      - name: Upload Artifacts Win/Linux
+        if: matrix.os == 'windows-latest' || matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{runner.os}} ${{ env.ARCHITECTURE }} Build
+          if-no-files-found: warn
+          overwrite: true
+          include-hidden-files: true
+          path: 'build/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
+
+      - name: Upload Artifacts MacOS
+        if: matrix.os == 'macos-13' || matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{runner.os}} ${{ env.ARCHITECTURE }} Build
+          if-no-files-found: warn
+          overwrite: true
+          include-hidden-files: true
+          path: 'build/WLEDLipSync.app/Contents/MacOS/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
+
+
+      - name: Create Release ${{github.event.inputs.mytag}} with Builds from Nuitka for Win/Linux
+        if: matrix.os == 'windows-latest' || matrix.os == 'ubuntu-latest'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          commit: main
+          tag: ${{github.event.inputs.mytag}}
+          artifacts: 'build/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
+
+      - name: Create Release ${{github.event.inputs.mytag}} with Builds from Nuitka for MacOS
+        if: matrix.os == 'macos-13' || matrix.os == 'macos-latest'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          commit: main
+          tag: ${{github.event.inputs.mytag}}
+          artifacts: 'build/WLEDLipSync.app/Contents/MacOS/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
+
