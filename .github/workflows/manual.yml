@@ -1,6 +1,4 @@
-# Cross-compile workflow that is manually triggered
-
-name: Cross Compile Manual workflow
+name: Spleeter Portable
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -18,155 +16,88 @@ on:
         # The data type of the input
         type: string
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-
 jobs:
   build:
-    permissions:
-      contents: write
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-13, macos-latest, ubuntu-latest, windows-latest]
-    env:
-      DEBUG_COMPILATION: yes
-      COMP_VERSION: ${{github.event.inputs.mytag}}
-
-    runs-on: ${{matrix.os}}
 
     steps:
-      - uses: kenchan0130/actions-system-info@master
-        id: system-info
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Get current time
-        uses: josStorer/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYYMMDD-HH
-          utcOffset: "+02:00"
-
-      - name: Check-out repository
-        uses: actions/checkout@v4
-
-      - name: Windows specific
-        if: matrix.os == 'windows-latest'
+      - name: Download Portable Python
         run: |
-          echo "ARCHITECTURE=amd64" >> $GITHUB_ENV
+          case ${{ matrix.os }} in
+            macos*)
+              os_name=macos
+              ;;
+            ubuntu*)
+              os_name=linux
+              ;;
+            windows*)
+              os_name=windows
+              ;;
+          esac
+          curl -L -o spleeter-portable-${os_name}-${{ runner.arch }}.zip https://github.com/bjia56/portable-python/releases/download/YOUR_RELEASE_VERSION/portable-python-${os_name}-${{ runner.arch }}.zip
 
-      - name: Ubuntu specific
-        if: matrix.os == 'ubuntu-latest'
+      - name: Extract Portable Python
         run: |
-          sudo apt-get update
-          sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-          sudo apt-get install ffmpeg
-          ARCHITECTURE=$(uname -m)
-          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+          case ${{ matrix.os }} in
+            macos*)
+              os_name=macos
+              unzip spleeter-portable-${os_name}-${{ runner.arch }}.zip -d spleeter-portable-${os_name}-${{ runner.arch }}
+              ;;
+            ubuntu*)
+              os_name=linux
+              unzip spleeter-portable-${os_name}-${{ runner.arch }}.zip -d spleeter-portable-${os_name}-${{ runner.arch }}
+              ;;
+            windows*)
+              os_name=windows
+              powershell -command "Expand-Archive spleeter-portable-${os_name}-${{ runner.arch }}.zip -DestinationPath spleeter-portable-${os_name}-${{ runner.arch }}"
+              ;;
+          esac
 
-      - name: MacOS specific Apple
-        if: matrix.os == 'macos-latest'
+      - name: Set up environment path
         run: |
-          brew update
-          brew install portaudio
-          brew reinstall libsndfile
-          ARCHITECTURE=$(uname -m)
-          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+          case ${{ matrix.os }} in
+            macos* | ubuntu*)
+              echo "Adding to PATH"
+              echo "spleeter-portable-${os_name}-${{ runner.arch }}/bin" >> $GITHUB_ENV
+              echo "spleeter-portable-${os_name}-${{ runner.arch }}/Scripts" >> $GITHUB_ENV
+              ;;
+            windows*)
+              echo "Adding to PATH"
+              echo "spleeter-portable-${os_name}-${{ runner.arch }}\\bin" >> $GITHUB_ENV
+              echo "spleeter-portable-${os_name}-${{ runner.arch }}\\Scripts" >> $GITHUB_ENV
+              ;;
+          esac
 
-      - name: MacOS specific Intel
-        if: matrix.os == 'macos-13'
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install numpy
+        run: python -m pip install numpy==1.26.3
+
+      - name: Install spleeter
+        run: python -m pip install spleeter
+
+      - name: Zip directory
         run: |
-          brew update
-          brew install portaudio
-          brew reinstall libsndfile
-          ARCHITECTURE=$(uname -m)
-          echo "ARCHITECTURE=$ARCHITECTURE" >> $GITHUB_ENV                  
+          case ${{ matrix.os }} in
+            macos* | ubuntu*)
+              zip -r spleeter-portable-${os_name}-${{ runner.arch }}.zip spleeter-portable-${os_name}-${{ runner.arch }}
+              ;;
+            windows*)
+              powershell -command "Compress-Archive -Path spleeter-portable-${os_name}-${{ runner.arch }} -DestinationPath spleeter-portable-${os_name}-${{ runner.arch }}.zip"
+              ;;
+          esac
 
-      - name: Setup Python x64
-        uses: actions/setup-python@v5
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         with:
-          python-version: '3.11' # Version range or exact version of a Python version to use
-          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-          cache: 'pip'
-          cache-dependency-path: |
-            **/requirements*.txt
-
-      - name: Add version info to json file
-        env:
-          GitRun: ${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
-        run: |
-            echo '{"version": "${{env.COMP_VERSION}}","gitrun": "${{env.GitRun}}","date": "${{ steps.current-time.outputs.time }}","name": "${{ steps.system-info.outputs.name }}","platform": "${{ steps.system-info.outputs.platform }}","release": "${{ steps.system-info.outputs.release }}","python":"${{env.Python_ROOT_DIR}}","youtube_disable":"${{env.YOUTUBE_DISABLE}}","debug_compilation":"${{env.DEBUG_COMPILATION}}"}' > ./assets/version-${{ steps.system-info.outputs.platform }}.json
-
-      - name: Ubuntu specific bis
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0 gir1.2-webkit2-4.1         
-          sudo apt-get install gstreamer1.0-plugins-bad
-
-      - name: Install Dependencies for All
-        run: |
-          pip install -r requirements.txt
-
-      - name: Build Executable for ${{runner.os}}
-        uses: Nuitka/Nuitka-Action@main
-        with:
-          nuitka-version: main
-          script-name: WLEDLipSync.py
-          company-name: zak-45
-          product-version: ${{github.event.inputs.mytag}}
-          file-version: ${{github.event.inputs.mytag}}
-          enable-plugins: tk-inter
-          windows-console-mode: disable
-          deployment: true
-          windows-icon-from-ico: assets/favicon.ico
-          macos-app-icon: assets/favicon.ico
-          onefile-tempdir-spec: ./WLEDLipSync
-          output-file: WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}
-          include-package-data: |
-            nicegui
-            ytmusicapi
-
-          include-module: |
-            pygments.formatters.html
-            taglib
-
-          include-data-files: |
-            favicon.ico=favicon.ico
-            splash-screen.png=splash-screen.png
-
-      - name: Upload Artifacts Win/Linux
-        if: matrix.os == 'windows-latest' || matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{runner.os}} ${{ env.ARCHITECTURE }} Build
-          if-no-files-found: warn
-          overwrite: true
-          include-hidden-files: true
-          path: 'build/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
-
-      - name: Upload Artifacts MacOS
-        if: matrix.os == 'macos-13' || matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{runner.os}} ${{ env.ARCHITECTURE }} Build
-          if-no-files-found: warn
-          overwrite: true
-          include-hidden-files: true
-          path: 'build/WLEDLipSync.app/Contents/MacOS/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
-
-
-      - name: Create Release ${{github.event.inputs.mytag}} with Builds from Nuitka for Win/Linux
-        if: matrix.os == 'windows-latest' || matrix.os == 'ubuntu-latest'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          commit: main
-          tag: ${{github.event.inputs.mytag}}
-          artifacts: 'build/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
-
-      - name: Create Release ${{github.event.inputs.mytag}} with Builds from Nuitka for MacOS
-        if: matrix.os == 'macos-13' || matrix.os == 'macos-latest'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          commit: main
-          tag: ${{github.event.inputs.mytag}}
-          artifacts: 'build/WLEDLipSync.app/Contents/MacOS/WLEDLipSync-${{runner.os}}_${{ env.ARCHITECTURE }}**'
-
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: spleeter-portable-${os_name}-${{ runner.arch }}.zip
+          asset_name: spleeter-portable-${os_name}-${{ runner.arch }}.zip
+          asset_content_type: application/zip
