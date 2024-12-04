@@ -50,7 +50,8 @@ jobs:
             powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}"
           else
             unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
-          fi          
+          fi
+        shell: bash
 
       - name: Set up environment path
         run: |
@@ -63,6 +64,7 @@ jobs:
               echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
               echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
           fi
+        shell: bash
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
