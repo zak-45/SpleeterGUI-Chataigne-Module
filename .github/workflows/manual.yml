@@ -66,6 +66,12 @@ jobs:
           Start-Sleep -Seconds 5
         shell: powershell
 
+      - name: Set Long Path Environment Variable
+        if: runner.os == 'Windows'
+        run: |
+          [System.Environment]::SetEnvironmentVariable('LONG_PATH_ENABLED', '1', [System.EnvironmentVariableTarget]::Machine)
+        shell: powershell
+
       - name: Download Portable Python
         run: |
           curl -L -o spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
