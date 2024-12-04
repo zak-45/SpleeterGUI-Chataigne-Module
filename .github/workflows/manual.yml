@@ -67,6 +67,12 @@ jobs:
           fi
         shell: bash
 
+      - name: Enable Windows Long Path Support
+        if: runner.os == 'Windows'
+        run: |
+          New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+        shell: powershell
+
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
@@ -78,14 +84,11 @@ jobs:
 
       - name: Zip directory
         run: |
-          case ${{ matrix.os }} in
-            macos* | ubuntu*)
+          if [ "${{ matrix.os_name }}" = "windows" ]; then
+              powershell -command "Compress-Archive -Path spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
+          else
               zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
-              ;;
-            windows*)
-              powershell -command "Compress-Archive -Path spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"
-              ;;
-          esac
+        shell: bash
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
