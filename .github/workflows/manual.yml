@@ -77,7 +77,7 @@ jobs:
       - name: Extract Portable Python
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
-            powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
+            powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
           else
             unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
           fi
@@ -87,8 +87,8 @@ jobs:
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
               echo "Adding to PATH"
-              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\bin" >> $GITHUB_PATH
-              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_PATH
+              echo "\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\bin" >> $GITHUB_PATH
+              echo "\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_PATH
           else
               echo "Adding to PATH"
               echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
