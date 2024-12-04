@@ -27,9 +27,9 @@ jobs:
           - os: macos-13
             os_name: darwin
             os_arch: universal2
-          - os: macos-latest
-            os_name: darwin
-            os_arch: universal2
+          # - os: macos-latest
+          #   os_name: darwin
+          #   os_arch: universal2
           - os: ubuntu-latest
             os_name: linux
             os_arch: x86_64
