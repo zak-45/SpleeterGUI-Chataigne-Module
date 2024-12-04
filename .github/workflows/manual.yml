@@ -53,22 +53,22 @@ jobs:
               os_name=windows
               ;;
           esac
-          curl -L -o spleeter-portable-${os_name}-${{ runner.arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
+          curl -L -o spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
 
       - name: Extract Portable Python
         run: |
           case ${{ matrix.os }} in
             macos*)
               os_name=macos
-              unzip spleeter-portable-${os_name}-${{ runner.arch }}.zip -d spleeter-portable-${os_name}-${{ runner.arch }}
+              unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
               ;;
             ubuntu*)
               os_name=linux
-              unzip spleeter-portable-${os_name}-${{ runner.arch }}.zip -d spleeter-portable-${os_name}-${{ runner.arch }}
+              unzip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
               ;;
             windows*)
               os_name=windows
-              powershell -command "Expand-Archive spleeter-portable-${os_name}-${{ runner.arch }}.zip -DestinationPath spleeter-portable-${os_name}-${{ runner.arch }}"
+              powershell -command "Expand-Archive spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}"
               ;;
           esac
 
@@ -77,13 +77,13 @@ jobs:
           case ${{ matrix.os }} in
             macos* | ubuntu*)
               echo "Adding to PATH"
-              echo "spleeter-portable-${os_name}-${{ runner.arch }}/bin" >> $GITHUB_ENV
-              echo "spleeter-portable-${os_name}-${{ runner.arch }}/Scripts" >> $GITHUB_ENV
+              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_ENV
+              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_ENV
               ;;
             windows*)
               echo "Adding to PATH"
-              echo "spleeter-portable-${os_name}-${{ runner.arch }}\\bin" >> $GITHUB_ENV
-              echo "spleeter-portable-${os_name}-${{ runner.arch }}\\Scripts" >> $GITHUB_ENV
+              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}\\bin" >> $GITHUB_ENV
+              echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_ENV
               ;;
           esac
 
@@ -100,10 +100,10 @@ jobs:
         run: |
           case ${{ matrix.os }} in
             macos* | ubuntu*)
-              zip -r spleeter-portable-${os_name}-${{ runner.arch }}.zip spleeter-portable-${os_name}-${{ runner.arch }}
+              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
               ;;
             windows*)
-              powershell -command "Compress-Archive -Path spleeter-portable-${os_name}-${{ runner.arch }} -DestinationPath spleeter-portable-${os_name}-${{ runner.arch }}.zip"
+              powershell -command "Compress-Archive -Path spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"
               ;;
           esac
 
@@ -111,6 +111,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: spleeter-portable-${os_name}-${{ runner.arch }}.zip
-          asset_name: spleeter-portable-${os_name}-${{ runner.arch }}.zip
+          asset_path: spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
+          asset_name: spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
           asset_content_type: application/zip
