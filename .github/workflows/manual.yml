@@ -87,17 +87,6 @@ jobs:
           fi
         shell: bash
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Spleeter Portable ${{ matrix.os_name }}-${{ matrix.os_arch }} Build
-          if-no-files-found: warn
-          overwrite: true
-          include-hidden-files: true
-          path: 'spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}**'
-
-
-
       - name: Create Release ${{github.event.inputs.mytag}} for Spleeter Portable python-headless-3.10.15
         uses: ncipollo/release-action@v1
         with:
