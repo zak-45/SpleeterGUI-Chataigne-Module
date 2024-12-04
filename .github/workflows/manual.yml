@@ -41,6 +41,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Enable Windows Long Path Support
+        if: runner.os == 'Windows'
+        run: |
+          New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+        shell: powershell
+
+      - name: Verify Windows Long Path Support
+        if: runner.os == 'Windows'
+        run: |
+          $LongPathsEnabled = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled"
+          if ($LongPathsEnabled.LongPathsEnabled -ne 1) {
+            Write-Error "Failed to enable Windows Long Path support"
+            exit 1
+          } else {
+            Write-Output "Windows Long Path support enabled successfully"
+          }
+        shell: powershell
+
+      - name: Restart PowerShell to Apply Long Path Setting
+        if: runner.os == 'Windows'
+        run: |
+          Write-Output "Restarting PowerShell to apply Long Path setting..."
+          Start-Sleep -Seconds 5
+        shell: powershell
+
       - name: Download Portable Python
         run: |
           curl -L -o spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
@@ -66,24 +91,6 @@ jobs:
               echo "spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
           fi
         shell: bash
-
-      - name: Enable Windows Long Path Support
-        if: runner.os == 'Windows'
-        run: |
-          New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
-        shell: powershell
-
-      - name: Verify Windows Long Path Support
-        if: runner.os == 'Windows'
-        run: |
-          $LongPathsEnabled = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled"
-          if ($LongPathsEnabled.LongPathsEnabled -ne 1) {
-            Write-Error "Failed to enable Windows Long Path support"
-            exit 1
-          } else {
-            Write-Output "Windows Long Path support enabled successfully"
-          }
-        shell: powershell
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
