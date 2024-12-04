@@ -91,8 +91,8 @@ jobs:
               echo "\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts" >> $GITHUB_PATH
           else
               echo "Adding to PATH"
-              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
-              echo "sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
+              echo "/tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/bin" >> $GITHUB_PATH
+              echo "/tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts" >> $GITHUB_PATH
           fi
         shell: bash
 
@@ -108,16 +108,16 @@ jobs:
       - name: Zip directory
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              powershell -command "Compress-Archive -Path sp-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
+              powershell -command "Compress-Archive -Path \\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }} -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
           else
-              zip -r sp-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}
+              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }} 
           fi
         shell: bash
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+      - name: Create Release ${{github.event.inputs.mytag}} for Spleeter Portable
+        uses: ncipollo/release-action@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
-          asset_name: spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
-          asset_content_type: application/zip
+          allowUpdates: true
+          commit: main
+          tag: ${{github.event.inputs.mytag}}
+          artifacts: 'spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip**'
