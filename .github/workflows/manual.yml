@@ -24,15 +24,15 @@ jobs:
         # os: [macos-13, macos-latest, ubuntu-latest, windows-latest]
         os: [windows-latest]
         include:
-          - os: macos-13
-            os_name: darwin
-            os_arch: universal2
+          #- os: macos-13
+          #  os_name: darwin
+          #  os_arch: universal2
           # - os: macos-latest
           #   os_name: darwin
           #   os_arch: universal2
-          - os: ubuntu-latest
-            os_name: linux
-            os_arch: x86_64
+          # - os: ubuntu-latest
+          #  os_name: linux
+          #  os_arch: x86_64
           - os: windows-latest
             os_name: windows
             os_arch: x86_64
