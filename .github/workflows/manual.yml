@@ -22,6 +22,19 @@ jobs:
     strategy:
       matrix:
         os: [macos-13, macos-latest, ubuntu-latest, windows-latest]
+        include:
+          - os: macos-13
+            os_name: darwin
+            os_arch: universal2
+          - os: macos-latest
+            os_name: darwin
+            os_arch: universal2
+          - os: ubuntu-latest
+            os_name: linux
+            os_arch: x86_64
+          - os: windows-latest
+            os_name: windows
+            os_arch: x86_64
 
     steps:
       - name: Checkout repository
@@ -40,7 +53,7 @@ jobs:
               os_name=windows
               ;;
           esac
-          curl -L -o spleeter-portable-${os_name}-${{ runner.arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${os_name}-${{ runner.arch }}.zip
+          curl -L -o spleeter-portable-${os_name}-${{ runner.arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
 
       - name: Extract Portable Python
         run: |
