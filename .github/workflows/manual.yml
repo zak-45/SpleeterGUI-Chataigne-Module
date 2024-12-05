@@ -41,6 +41,9 @@ jobs:
 
     steps:
 
+      - name: Check-out repository
+        uses: actions/checkout@v4
+
       - name: Download Portable Python
         run: |
           curl -L -o python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip https://github.com/bjia56/portable-python/releases/download/cpython-v3.10.15-build.0/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip
@@ -77,6 +80,16 @@ jobs:
 
       - name: Install spleeter
         run: python -m pip install spleeter
+
+      - name: Patch spleeter
+        run: |
+          if [ "${{ matrix.os_name }}" = "windows" ]; then
+              python -m fix_shebang /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/spleeter.exe -o /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}          
+          else
+              python -m fix_shebang /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/spleeter -o /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }} 
+          fi
+        shell: bash
+
 
       - name: Zip directory
         run: |

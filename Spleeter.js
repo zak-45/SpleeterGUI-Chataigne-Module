@@ -11,6 +11,9 @@ work with mp3 file.
 Mainly used to separate vocals from a song.
 Need python / tensorflow // ffmpeg ffprobe
 
+Repo: https://github.com/zak-45/SpleeterGUI-Chataigne-Module
+
+Portable Spleeter version available here : https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/tag/0.0.0.0
 
 */
 
