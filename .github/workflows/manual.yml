@@ -84,9 +84,9 @@ jobs:
       - name: Patch spleeter
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              python -m fix_shebang /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/spleeter.exe -o /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}          
+              python -m fix_shebang D:\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts\\spleeter.exe -o D:\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}\\Scripts          
           else
-              python -m fix_shebang /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/spleeter -o /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }} 
+              python -m fix_shebang /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/spleeter -o /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}/Scripts/ 
           fi
         shell: bash
 
