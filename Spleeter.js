@@ -2,7 +2,7 @@
 
 author:	zak45
 date:	07/02/2023
-version:1.3.0
+version:2.0.0
 
 Chataigne Module for  Deezer /spleeter
 
@@ -20,8 +20,15 @@ Portable Spleeter version available here : https://github.com/zak-45/SpleeterGUI
 // Main module parameters 
 
 var shouldProcessSpl = false;
+var shouldProcessInstall = false;
+var installIsRunning = false;
+var fileToTest = "";
+
+var spOS = "";
 var homeDIR = "";
 var winHOME = "";
+var moduleDIR = "";
+
 var	sequence = "";
 var	targetFile = "";
 var	model = "";
@@ -74,19 +81,21 @@ function init()
 	var infos = util.getOSInfos(); 
 	script.log("Hello "+infos.username);	
 	script.log("We run under : "+infos.name);
+	spOS = infos.name;
 	
 	if ( infos.name.contains("Win") )
 	{
-		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents";
+		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents/Chataigne";
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
-		
+		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
+        fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
+
 	} else {
 		
-		homeDIR = util.getEnvironmentVariable("$HOME");
+		homeDIR = util.getEnvironmentVariable("$HOME") + "/Chataigne";
+		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
+		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 	}
-	
-	//
-	script.setUpdateRate(1);	
 }
 
 function update()
@@ -156,7 +165,20 @@ function update()
 		{
 			shouldProcessSpl = false;
 			runSpleeter (sequence, targetFile, model);
-		}		
+		}
+		if (shouldProcessInstall && !installIsRunning)
+		{
+			shouldProcessInstall = false;
+			runInstall();
+		}
+		if (installIsRunning)
+		{
+			if (util.fileExists(fileToTest)) {
+			    installIsRunning = false;
+			    util.showMessageBox("Spleeter", "install finished", "information", "ok");
+
+			}
+		}
 	}
 }
 
@@ -172,11 +194,37 @@ function moduleParameterChanged (param)
 			
 			util.gotoURL('https://research.deezer.com/projects/spleeter.html');
 	}
+	if (param.name == "install") {
+
+	    if (installIsRunning == true) {
+
+	    	util.showMessageBox("Spleeter", "Installation is already running ....", "warning", "ok");
+
+	    } else {
+
+            util.showYesNoCancelBox("install", "Spleeter", "proceed with installation", ["question"] );
+        }
+	}
+
+}
+
+function messageBoxCallback(id, value) {
+
+    script.log('message box callback' + id + value );
+    if (id == "install" && value == 1) {
+        if (util.fileExists(fileToTest)) {
+
+            util.showMessageBox("Spleeter", "Already installed", "info", "ok");
+
+        } else {
+            shouldProcessInstall = true;
+        }
+    }
 }
 
 function moduleValueChanged (value) 
 {	
-	script.log("Module value changed : "+value);	
+	script.log("Module value changed : "+value);
 }
 
 
@@ -436,7 +484,7 @@ function runSpleeter (sequence, targetFile, model)
 			}
 		}			
 
-		util.showMessageBox("Spleeter !", "Process finished for : " + newSequence.name, "information", "OK");
+		util.showMessageBox("Spleeter !", "Process finished for : " + newSequence.name, "info", "OK");
 
 	} else {
 		
@@ -517,6 +565,26 @@ function readMp3Tags(type)
 	}
 	
 return tag;	
+}
+
+function runInstall() {
+
+    installIsRunning = true;
+	util.showMessageBox("Spleeter !", "Installation is running... this will take a while, coffee time ! ", "info", "OK");
+	script.log('installation for os : '+spOS);
+
+	if ( spOS.contains("Win") )
+	{
+    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/install.cmd", "");
+		script.log(launchresult);
+
+
+
+	} else {
+
+	    script.log('installation for os : '+spOS);
+
+	}
 }
 
 // used for value/expression testing .......
