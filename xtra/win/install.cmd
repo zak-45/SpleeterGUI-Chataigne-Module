@@ -1,5 +1,6 @@
 @echo off
 Rem This script will install Spleeter Portable version in %USERPROFILE%\Documents\Chataigne\xtra
+Rem Win version
 cls
 
 Rem Download from GIT

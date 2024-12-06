@@ -35,7 +35,7 @@ var	model = "";
 var newAudio = "";
 
 // spleeter cmd file name (required)
-var spleeterCMDName = "spleeter.cmd";
+var spleeterCMDName = "run_spleeter.cmd";
 
 // check spleeter
 var spleeterIsRunning = false;
@@ -89,12 +89,14 @@ function init()
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
         fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
+        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/win/run_spleeter.cmd"
 
 	} else {
 		
 		homeDIR = util.getEnvironmentVariable("$HOME") + "/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
+        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/posix/run_spleeter.sh"
 	}
 }
 
@@ -575,15 +577,13 @@ function runInstall() {
 
 	if ( spOS.contains("Win") )
 	{
-    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/install.cmd", "");
+    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/win/install.cmd", "");
 		script.log(launchresult);
-
-
 
 	} else {
 
-	    script.log('installation for os : '+spOS);
-
+    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/posix/install.sh", "");
+		script.log(launchresult);
 	}
 }
 
