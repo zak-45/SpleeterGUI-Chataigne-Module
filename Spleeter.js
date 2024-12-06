@@ -34,6 +34,8 @@ var	targetFile = "";
 var	model = "";
 var newAudio = "";
 
+var infos = util.getOSInfos();
+
 // spleeter cmd file name (required)
 var spleeterCMDName = "run_spleeter.cmd";
 
@@ -77,8 +79,7 @@ function init()
 	{
 		util.showMessageBox("Spleeter  !", "TMP, TMPDIR or TEMP env variable not found", "warning", "OK");
 	}
-	
-	var infos = util.getOSInfos(); 
+
 	script.log("Hello "+infos.username);	
 	script.log("We run under : "+infos.name);
 	spOS = infos.name;
@@ -89,14 +90,13 @@ function init()
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
         fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
-        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/win/run_spleeter.cmd";
 
 	} else {
 		
 		homeDIR = util.getEnvironmentVariable("$HOME") + "/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
-        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/posix/run_spleeter.sh";
+
 	}
 }
 
@@ -144,8 +144,13 @@ function update()
 			var newTSequence = newSequence.layers.addItem("Trigger");
 			var newASequence = newSequence.layers.addItem("Audio");			
 		}
-			
-		// local.parameters.spleeterParams.spleeterCommand.set(homeDIR+"/Chataigne/modules/Spleeter/spleeter.cmd");
+
+		if (infos.name.contains("Win"))
+		{
+		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/win/run_spleeter.cmd");
+		} else {
+		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/posix/run_spleeter.sh");
+		}
 		
 		if (SCAexist.name == "sCAnalyzer")
 		{	
