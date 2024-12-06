@@ -89,14 +89,14 @@ function init()
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
         fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
-        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/win/run_spleeter.cmd"
+        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/win/run_spleeter.cmd";
 
 	} else {
 		
 		homeDIR = util.getEnvironmentVariable("$HOME") + "/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
-        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/posix/run_spleeter.sh"
+        local.parameters.spleeterParams.spleeterCommand=moduleDIR+"/xtra/posix/run_spleeter.sh";
 	}
 }
 
