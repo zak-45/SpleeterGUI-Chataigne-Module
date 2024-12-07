@@ -548,9 +548,9 @@ function readMp3Tags(type)
 {
 	var tag = "";
 	
-	if (util.fileExists(moduleDIR + "xtra/song_tags_info.json"))
+	if (util.fileExists(moduleDIR + "/xtra/song_tags_info.json"))
 	{
-		var JSONContent = util.readFile(moduleDIR + "xtra/song_tags_info.json",true);
+		var JSONContent = util.readFile(moduleDIR + "/xtra/song_tags_info.json",true);
 
 		if ( type == "artist" )
 		{
@@ -568,7 +568,7 @@ function readMp3Tags(type)
 	} else {
 	
 		tag = "nofile";
-		script.log('File does not exist : ' + moduleDIR + "xtra/song_tags_info.json");
+		script.log('File does not exist : ' + moduleDIR + "/xtra/song_tags_info.json");
 	
 	}
 	
