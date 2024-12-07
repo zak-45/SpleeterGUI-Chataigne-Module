@@ -94,7 +94,6 @@ jobs:
           fi
         shell: bash
 
-
       - name: Zip directory
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
