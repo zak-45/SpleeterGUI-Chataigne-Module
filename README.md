@@ -68,6 +68,8 @@ From Chataigne
  Use module manager
 
 ```
+![image](https://github.com/user-attachments/assets/2e373f89-43ae-4bb5-b45b-f3dff2842133)
+
 
 ### ***Use it :***
 
