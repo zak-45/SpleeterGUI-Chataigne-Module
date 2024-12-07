@@ -554,7 +554,7 @@ function readMp3Tags(type)
 
 		if ( type == "artist" )
 		{
-			tag = JSONContent.ARTIST[0]
+			tag = JSONContent.ARTIST[0];
 		} else if ( type == "album" ){
 			tag = JSONContent.ALBUM[0];
 		} else if ( type == "title" ){
