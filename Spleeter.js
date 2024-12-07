@@ -358,7 +358,7 @@ function runSpleeter (sequence, targetFile, model)
 			
 		} else {
 			
-			splOutputOptions = "ffprobeOnly for info";
+			splOutputOptions = "mp3tags for info";
 
 			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);

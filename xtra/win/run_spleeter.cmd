@@ -13,4 +13,4 @@ cd %USERPROFILE%\Documents\Chataigne\modules\SpleeterGUI-Chataigne-Module-main\x
 
 python -m extract_tags %8
 
-if NOT "%1"=="ffprobeOnly" spleeter.exe %1 %2 %3 %4 %5 %6 %7 %8 %9
+if NOT "%1"=="mp3tags" spleeter.exe %1 %2 %3 %4 %5 %6 %7 %8 %9
