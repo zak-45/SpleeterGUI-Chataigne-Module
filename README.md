@@ -13,7 +13,7 @@ You should be able to hear the song without bass, drums , vocals etc ...or only 
 
 This should work on all OS where Chataigne/Spleeter are supported (Win/macOS/Linux...)
 
-Windows users can have it running in few minutes.
+Windows / Linux / Mac users can have it running in few minutes.
 > You do not need to install python or spleeter, this is a portable version of python pre-loaded with spleeter.
 
 ### *** Videos DEMO ***
@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/121941293/219706114-4a899a6c-35b6-47ac
 https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e-ab5a-a6f25eb83d60.mp4
 > 5 stems
 
-### *** Prerequest ***
+### *** Prerequest for Manual installation ***
 Need python 3 (3.10.x x64)/ spleeter & tensorflow modules / ffmpeg
 
 ```
@@ -44,9 +44,9 @@ Win user can use winget:
 >
 
 
-For Win users, portable version has been setup with all prerequest (except ffmpeg).
+For Win/Linux/Mac users, portable version has been setup with all prerequest (except ffmpeg).
 > 
->[Win Installer](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases)
+>[Python Portable version with Spleeter module](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases/tag/0.0.0.0)
 
 
 
@@ -59,14 +59,14 @@ For Win users, portable version has been setup with all prerequest (except ffmpe
 Manual
 ```
 Copy this repository to :
-<MyDocuments>/Chataigne/modules/Spleeter
-nota: name must be 'Spleeter'
-```
+<MyDocuments>/Chataigne/modules/SpleeterGUI-Chataigne-Module-main
 
-Win users can use the portable version with all pre-requests
-> 
->[Win Installer](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases)
-> nota: you steel need to have ffmpeg installed
+```
+From Chataigne
+```
+ Use module manager
+
+```
 
 ### ***Use it :***
 
