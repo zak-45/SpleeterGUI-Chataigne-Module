@@ -548,18 +548,19 @@ function readMp3Tags(type)
 {
 	var tag = "";
 	
-	if (util.fileExists(tempDIR + "/ffprobefileinfo.json"))
+	if (util.fileExists(moduleDIR + "xtra/song_tags_info.json"))
 	{
-		var SCAJSONContent = util.readFile(tempDIR + "/ffprobefileinfo.json",true);
+		var JSONContent = util.readFile(moduleDIR + "xtra/song_tags_info.json",true);
+
 		if ( type == "artist" )
 		{
-			tag = SCAJSONContent.format.tags.artist;
+			tag = JSONContent.ARTIST[0]
 		} else if ( type == "album" ){
-			tag = SCAJSONContent.format.tags.album;
+			tag = JSONContent.ALBUM[0];
 		} else if ( type == "title" ){
-			tag = SCAJSONContent.format.tags.title;
+			tag = JSONContent.TITLE[0];
 		} else if ( type == "date"  ){
-			tag = SCAJSONContent.format.tags.date;
+			tag = JSONContent.DATE[0];
 		} else {
 			tag = "undefined";
 		}
@@ -567,7 +568,7 @@ function readMp3Tags(type)
 	} else {
 	
 		tag = "nofile";
-		script.log('File does not exist : ' + tempDIR + "/ffprobefileinfo.json");
+		script.log('File does not exist : ' + moduleDIR + "xtra/song_tags_info.json");
 	
 	}
 	
