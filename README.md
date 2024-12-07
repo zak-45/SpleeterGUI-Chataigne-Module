@@ -82,6 +82,16 @@ Go to Modules, right click, Custom, Spleeter.
 
 
 ```
+To install Python Portable with spleeter module, use the Install button.
+This will do the necessary steps to put on your system a running spleeter python module
+
+Not all OS has been set, zip file avaialble for Win / Linux x86_64 / MacOs universal2
+```
+
+![image](https://github.com/user-attachments/assets/77c81dab-4cd3-430e-a310-2bf7f6b29571)
+
+
+```
 On Inspector:
 	Spleeter command: command to execute
 		This is the full path for the command to launch. Need to be adapted to your needs/ installation.
