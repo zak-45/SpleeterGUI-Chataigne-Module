@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e
 Need python 3 (3.10.x x64)/ spleeter & tensorflow modules / ffmpeg
 
 ```
-pip install numpy==1.23.6
+pip3 install numpy==1.26.3
 pip3 install spleeter==2.4.0
 ```
 > Spleeter : https://github.com/deezer/spleeter/wiki/1.-Installation
