@@ -38,6 +38,8 @@ jobs:
           - os: windows-latest
             os_name: windows
             os_arch: x86_64
+    env:
+      PYTHONDONTWRITEBYTECODE: TRUE
 
     steps:
 
@@ -70,6 +72,7 @@ jobs:
               echo "/tmp/PySp3.10/bin" >> $GITHUB_PATH
               echo "/tmp/PySp3.10/Scripts" >> $GITHUB_PATH
           fi
+          PYTHONDONTWRITEBYTECODE=TRUE
         shell: bash
 
       - name: Upgrade pip
