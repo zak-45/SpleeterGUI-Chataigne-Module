@@ -19,7 +19,7 @@
 
 	"parameters": {
 
-		"Portable Installation": {
+		"Portable Python Installation": {
 			"type": "Container",
 			"description":"Spleeter Python Portable installation",
 			"collapsed": false,
