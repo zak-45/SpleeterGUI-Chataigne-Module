@@ -31,6 +31,7 @@ https://user-images.githubusercontent.com/121941293/219708676-e8038fb5-9c48-4f2e
 Need python 3 (3.10.x x64)/ spleeter & tensorflow modules / ffmpeg
 
 ```
+pip3 install numpy==1.26.3
 pip3 install spleeter==2.4.0
 ```
 > Spleeter : https://github.com/deezer/spleeter/wiki/1.-Installation
@@ -67,6 +68,8 @@ From Chataigne
  Use module manager
 
 ```
+![image](https://github.com/user-attachments/assets/2e373f89-43ae-4bb5-b45b-f3dff2842133)
+
 
 ### ***Use it :***
 
@@ -76,6 +79,17 @@ Open  Chataigne.
 Go to Modules, right click, Custom, Spleeter.
 ```
 ![image](https://user-images.githubusercontent.com/121941293/218341586-ccd6ed27-5d1f-4422-b763-8666b112bae4.png)
+
+
+```
+To install Python Portable with spleeter module, use the Install button.
+This will do the necessary steps to put on your system a running spleeter python module
+
+Not all OS has been set, zip file avaialble for Win / Linux x86_64 / MacOs universal2
+--> this can be extanded
+```
+
+![image](https://github.com/user-attachments/assets/77c81dab-4cd3-430e-a310-2bf7f6b29571)
 
 
 ```
