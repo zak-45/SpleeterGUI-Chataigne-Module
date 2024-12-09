@@ -21,11 +21,12 @@
 
 		"Portable Installation": {
 			"type": "Container",
-			"description":"Spleeter Portable installation",
+			"description":"Spleeter Python Portable installation",
 			"collapsed": false,
 			"install": {
 				"type": "Trigger",
-				"description": "Install Spleeter portable version for your OS.Click to initiate installation, this could take a while...."
+				"description": "Install Spleeter Python portable version for your OS.Not necessary if you want to use your own, in this case you need to customize the cmd files.Click to initiate installation, this could take a while....",
+
 			}
 		},
 		"Spleeter Params":{
