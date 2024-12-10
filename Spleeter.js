@@ -92,7 +92,7 @@ function init()
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 
-		tempDIR="/tmp"
+		tempDIR="/tmp";
 
 	} else if ( infos.name.contains("macOS") ){
 
@@ -100,7 +100,7 @@ function init()
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 
-		tempDIR="/tmp"
+		tempDIR="/tmp";
 
 	}
 
