@@ -72,18 +72,10 @@ function init()
 
 	script.log("-- Custom command called init()");	
 
-	// we check required TMP folder
-	spTmpPath();
-	script.log("Temp folder : "+tempDIR);
-	if (tempDIR == "")
-	{
-		util.showMessageBox("Spleeter  !", "TMP, TMPDIR or TEMP env variable not found", "warning", "OK");
-	}
-
-	script.log("Hello "+infos.username);	
+	script.log("Hello "+infos.username);
 	script.log("We run under : "+infos.name);
 	spOS = infos.name;
-	
+
 	if ( infos.name.contains("Win") )
 	{
 		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents/Chataigne";
@@ -91,13 +83,34 @@ function init()
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
         fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
 
-	} else {
+        // we check required TMP folder
+        spTmpPath();
+
+	} else if ( infos.name.contains("Linux") ){
 		
-		homeDIR = util.getEnvironmentVariable("$HOME") + "/Chataigne";
+		homeDIR = util.getEnvironmentVariable("$HOME") + "/Documents/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 
+		tempDIR="/tmp"
+
+	} else if ( infos.name.contains("macOS") ){
+
+		homeDIR = util.getEnvironmentVariable("$HOME") + "/Documents/Chataigne";
+		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
+		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
+
+		tempDIR="/tmp"
+
 	}
+
+    script.log("Temp folder : "+tempDIR);
+
+    if (tempDIR == "")
+    {
+        util.showMessageBox("Spleeter  !", "TMP, TMPDIR or TEMP env variable not found", "warning", "OK");
+    }
+
 }
 
 function update()
@@ -527,7 +540,8 @@ function spTmpPath ()
 		tempDIR = pathTEMP;
 		return tempDIR;	
 	}
-	
+
+
 	script.log('ERROR temp directory not found');
 	script.logError("Something wrong with Spleeter....");
 	
