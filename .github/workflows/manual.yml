@@ -93,7 +93,7 @@ jobs:
           if [ "${{ matrix.os_name }}" = "windows" ]; then
               python -m fix_shebang D:\\tmp\\PySp3.10\\Scripts\\spleeter.exe -o D:\\tmp\\PySp3.10\\Scripts         
           else
-              python -m fix_shebang /tmp/PySp3.10/bin/spleeter -o /tmp/PySp3.10 
+              python -m fix_shebang /tmp/PySp3.10/bin/spleeter -o /tmp/PySp3.10/bin
           fi
         shell: bash
 
