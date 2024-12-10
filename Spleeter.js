@@ -600,11 +600,17 @@ function runInstall() {
     	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/win/install.cmd", "");
 		script.log(launchresult);
 
-	} else {
+	} else if ( spOS.contains("Linux") ) {
 
-    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/posix/install.sh", "");
+    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/linux/install.sh", "");
+		script.log(launchresult);
+
+	} else if ( spOS.contains("maxOS") ) {
+
+    	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/mac/install.sh", "");
 		script.log(launchresult);
 	}
+
 }
 
 // used for value/expression testing .......
