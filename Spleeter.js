@@ -88,7 +88,7 @@ function init()
 
 	} else if ( infos.name.contains("Linux") ){
 		
-		homeDIR = util.getEnvironmentVariable("$HOME") + "/Documents/Chataigne";
+		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 
@@ -96,7 +96,7 @@ function init()
 
 	} else if ( infos.name.contains("macOS") ){
 
-		homeDIR = util.getEnvironmentVariable("$HOME") + "/Documents/Chataigne";
+		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
 		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
 
