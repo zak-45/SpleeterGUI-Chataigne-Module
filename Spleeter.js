@@ -161,10 +161,12 @@ function update()
 		if (infos.name.contains("Win"))
 		{
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/win/run_spleeter.cmd");
-		} else {
-		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/posix/run_spleeter.sh");
+		} else if (infos.name.contains("linux")) {
+		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/linux/run_spleeter.sh");
+		} else if (infos.name.contains("macOS")) {
+		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/mac/run_spleeter.sh");
 		}
-		
+
 		if (SCAexist.name == "sCAnalyzer")
 		{	
 			script.log("SCAnalyzer present");
