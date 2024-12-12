@@ -85,15 +85,8 @@ function init()
         // we check required TMP folder
         spTmpPath();
 
-	} else if ( infos.name.contains("Linux") ){
+	} else {
 		
-		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
-		fileToTest = homeDIR + "/xtra/PySp3.10/bin/spleeter";
-
-		tempDIR="/tmp";
-
-	} else if ( infos.name.contains("macOS") ){
-
 		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
 		fileToTest = homeDIR + "/xtra/PySp3.10/bin/spleeter";
 
