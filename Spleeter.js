@@ -80,7 +80,6 @@ function init()
 	{
 		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents/Chataigne";
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
-		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
         fileToTest = homeDIR + "/xtra/PySp3.10/Scripts/spleeter.exe";
 
         // we check required TMP folder
@@ -89,20 +88,20 @@ function init()
 	} else if ( infos.name.contains("Linux") ){
 		
 		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
-		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
-		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
+		fileToTest = homeDIR + "/xtra/PySp3.10/bin/spleeter";
 
 		tempDIR="/tmp";
 
 	} else if ( infos.name.contains("macOS") ){
 
 		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
-		moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
-		fileToTest = homeDIR + "/modules/xtra/PySp3.10/bin/spleeter";
+		fileToTest = homeDIR + "/xtra/PySp3.10/bin/spleeter";
 
 		tempDIR="/tmp";
 
 	}
+
+	moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 
     script.log("Temp folder : "+tempDIR);
 
