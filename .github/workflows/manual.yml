@@ -53,11 +53,11 @@ jobs:
       - name: Extract Portable Python
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
-            powershell -command "Expand-Archive python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
-            powershell -command "Move-Item -Path 'D:\\tmp\\sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}' -Destination 'D:\\tmp\\PySp3.10'"
+            powershell -command "Expand-Archive python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -DestinationPath sp-${{ matrix.os_name }}-${{ matrix.os_arch }}"
+            powershell -command "Move-Item -Path 'sp-${{ matrix.os_name }}-${{ matrix.os_arch }}\\python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }}' -Destination 'PySp3.10'"
           else
-            unzip python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
-            mv /tmp/sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }} /tmp/PySp3.10
+            unzip python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
+            mv sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }} PySp3.10
           fi
         shell: bash
 
@@ -65,12 +65,12 @@ jobs:
         run: |
           if [[ ${{ matrix.os_name }} == 'windows' ]]; then
               echo "Adding to PATH"
-              echo "D:\\tmp\\PySp3.10\\bin" >> $GITHUB_PATH
-              echo "D:\\tmp\\PySp3.10\\Scripts" >> $GITHUB_PATH
+              echo "PySp3.10\\bin" >> $GITHUB_PATH
+              echo "PySp3.10\\Scripts" >> $GITHUB_PATH
           else
               echo "Adding to PATH"
-              echo "/tmp/PySp3.10/bin" >> $GITHUB_PATH
-              echo "/tmp/PySp3.10/Scripts" >> $GITHUB_PATH
+              echo "PySp3.10/bin" >> $GITHUB_PATH
+              echo "PySp3.10/Scripts" >> $GITHUB_PATH
           fi
           PYTHONDONTWRITEBYTECODE=TRUE
         shell: bash
@@ -91,19 +91,18 @@ jobs:
       - name: Patch spleeter
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              python -m fix_shebang D:\\tmp\\PySp3.10\\Scripts\\spleeter.exe -o D:\\tmp\\PySp3.10\\Scripts         
+              python -m fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
           else
-              python -m fix_shebang /tmp/PySp3.10/bin/spleeter -o /tmp/PySp3.10/bin
+              python -m fix_shebang PySp3.10/bin/spleeter -o PySp3.10/bin
           fi
         shell: bash
 
       - name: Zip directory
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              powershell -command "Compress-Archive -Path D:\\tmp\\PySp3.10 -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
-          else
-              cd /tmp
-              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip ./PySp3.10
+              powershell -command "Compress-Archive -Path PySp3.10 -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
+          else              
+              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip PySp3.10            
           fi
         shell: bash
 
