@@ -102,7 +102,8 @@ jobs:
           if [ "${{ matrix.os_name }}" = "windows" ]; then
               powershell -command "Compress-Archive -Path D:\\tmp\\PySp3.10 -DestinationPath spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip"          
           else
-              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip /tmp/PySp3.10
+              cd /tmp
+              zip -r spleeter-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip ./PySp3.10
           fi
         shell: bash
 
