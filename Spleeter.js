@@ -75,7 +75,7 @@ function init()
 	script.log("Hello "+infos.username);
 	script.log("We run under : "+infos.name);
 
-	spOS = infos.name
+	spOS = infos.name;
 
 	if ( spOS.contains("Win") )
 	{
