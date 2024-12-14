@@ -74,7 +74,6 @@ function init()
 
 	script.log("Hello "+infos.username);
 	script.log("We run under : "+infos.name);
-	spOS = infos.name;
 
 	if ( infos.name.contains("Win") )
 	{
@@ -155,8 +154,12 @@ function update()
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/win/run_spleeter.cmd");
 		} else if (infos.name.contains("linux")) {
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/linux/run_spleeter.sh");
+		    make_executable((moduleDIR+"/xtra/linux/run_spleeter.sh");
+		    make_executable((moduleDIR+"/xtra/linux/install.sh");
 		} else if (infos.name.contains("macOS")) {
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/mac/run_spleeter.sh");
+		    make_executable(moduleDIR+"/xtra/mac/run_spleeter.sh);
+		    make_executable(moduleDIR+"/xtra/mac/install.sh);
 		}
 
 		if (SCAexist.name == "sCAnalyzer")
@@ -606,6 +609,14 @@ function runInstall() {
 	}
 
 }
+
+function make_executable(name)
+{
+    script.log('set +x to : ' + name);
+    var launchresult = root.modules.os.launchProcess('chmod u+x ' + name, true);
+    script.log(launchresult);
+}
+
 
 // used for value/expression testing .......
 function testScript(songname)
