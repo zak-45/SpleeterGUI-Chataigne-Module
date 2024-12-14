@@ -362,7 +362,7 @@ function runSpleeter (sequence, targetFile, model)
 			} else {
 				verbose = "";
 			}
-			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile.getAbsolutePath() + '" ' + verbose;
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);
 			// we execute the Spleeter command in blocking mode to wait end of execution;
 			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
@@ -372,7 +372,7 @@ function runSpleeter (sequence, targetFile, model)
 			
 			splOutputOptions = "mp3tags for info";
 
-			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile.getAbsolutePath() + '" ' + verbose;
+			var exeOPT = " " + splOutputOptions + " -o " + '"' + splOutputFolder + '" -p ' +  splStems+' "' + targetFile + '" ' + verbose;
 			script.log('command to run : '+ spleeterCMDName + exeOPT);
 			// we execute the Spleeter command file for ffprobe only 
 			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
