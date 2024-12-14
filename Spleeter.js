@@ -152,7 +152,7 @@ function update()
 		if (infos.name.contains("Win"))
 		{
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/win/run_spleeter.cmd");
-		} else if (infos.name.contains("linux")) {
+		} else if (infos.name.contains("Linux")) {
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/linux/run_spleeter.sh");
 		    make_executable(moduleDIR+"/xtra/linux/run_spleeter.sh");
 		    make_executable(moduleDIR+"/xtra/linux/install.sh");
