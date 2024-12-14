@@ -154,8 +154,8 @@ function update()
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/win/run_spleeter.cmd");
 		} else if (infos.name.contains("linux")) {
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/linux/run_spleeter.sh");
-		    make_executable((moduleDIR+"/xtra/linux/run_spleeter.sh");
-		    make_executable((moduleDIR+"/xtra/linux/install.sh");
+		    make_executable(moduleDIR+"/xtra/linux/run_spleeter.sh");
+		    make_executable(moduleDIR+"/xtra/linux/install.sh");
 		} else if (infos.name.contains("macOS")) {
 		    local.parameters.spleeterParams.spleeterCommand.set(moduleDIR+"/xtra/mac/run_spleeter.sh");
 		    make_executable(moduleDIR+"/xtra/mac/run_spleeter.sh);
