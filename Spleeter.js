@@ -91,7 +91,14 @@ function init()
 		homeDIR = util.getEnvironmentVariable("HOME") + "/Documents/Chataigne";
 		fileToTest = homeDIR + "/xtra/PySp3.10/bin/spleeter";
 
-		tempDIR="/var/tmp";
+        // we check required TMP folder
+        spTmpPath();
+
+        if (tempDIR == "")
+        {
+            tempDIR="/tmp";
+        }
+
 
 	}
 
