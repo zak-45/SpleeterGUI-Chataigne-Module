@@ -75,7 +75,9 @@ function init()
 	script.log("Hello "+infos.username);
 	script.log("We run under : "+infos.name);
 
-	if ( infos.name.contains("Win") )
+	spOS = infos.name
+
+	if ( spOS.contains("Win") )
 	{
 		homeDIR = util.getEnvironmentVariable("USERPROFILE") + "/Documents/Chataigne";
 		winHOME = util.getEnvironmentVariable("USERPROFILE");
@@ -590,7 +592,7 @@ function runInstall() {
 
     installIsRunning = true;
 	util.showMessageBox("Spleeter !", "Installation is running... this will take a while, coffee time ! ", "info", "OK");
-	script.log('installation for os : '+spOS);
+	script.log('installation for os : '+ spOS);
 
 	if ( spOS.contains("Win") )
 	{
