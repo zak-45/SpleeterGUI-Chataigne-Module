@@ -36,4 +36,5 @@ if [ "$1" != "mp3tags" ]; then
     spleeter "$1" "$2" "$3" "$4" "$folder_name" "$6" "$7" "$audio_file" "$9"
 fi
 
+# terminal
 gnome-terminal --tab --title="SPLEETER" --command="bash -c 'export PS1='spleeter>; $SHELL'" --tab --title="PYTHON" --command="bash -c 'python; $SHELL'"
