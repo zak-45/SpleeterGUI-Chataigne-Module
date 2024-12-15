@@ -37,4 +37,11 @@ if [ "$1" != "mp3tags" ]; then
 fi
 
 # terminal
-gnome-terminal --tab --title="SPLEETER" --command="bash -c 'export PS1='spleeter>; $SHELL'" --tab --title="PYTHON" --command="bash -c 'python; $SHELL'"
+# Create a temporary file
+TMPFILE=$(mktemp)
+
+echo "PS1=spleeter>" > "$TMPFILE"
+echo "rm -f $TMPFILE" >> "$TMPFILE"
+
+# execute new terminal
+gnome-terminal -- $SHELL --rcfile "$TMPFILE"
