@@ -19,8 +19,13 @@ echo "$7"
 echo "$8"
 
 # replace '"' by '' (Chataigne problem)
-export audio_file=${8/\"/}
-export folder_name=${5/\"/}
+audio_file=$(echo "$8" | sed -e "s/\"//g")
+export audio_file
+folder_name=$(echo "$5" | sed -e "s/\"//g")
+export folder_name
+
+echo "audio file : ${audio_file}"
+echo "folder output : ${folder_name}"
 
 # extract mp3 tags
 python3 -m extract_tags "$audio_file"
