@@ -19,6 +19,22 @@ echo "$6"
 echo "$7"
 echo "$8"
 
+
+# terminal
+if [ "$1" == "cmd" ]; then
+  # Create a temporary file
+  TMPFILE=$(mktemp)
+
+  echo "PS1=spleeter-cmd\>" > "$TMPFILE"
+  echo "spleeter --help" >> "$TMPFILE"
+  echo "rm -f $TMPFILE" >> "$TMPFILE"
+
+  # execute new terminal
+  gnome-terminal -- $SHELL --rcfile "$TMPFILE"
+  exit
+fi
+
+
 # replace '"' by '' (Chataigne on linux problem)
 audio_file=$(echo "$8" | sed -e "s/\"//g")
 export audio_file
@@ -36,13 +52,3 @@ if [ "$1" != "mp3tags" ]; then
     spleeter "$1" "$2" "$3" "$4" "$folder_name" "$6" "$7" "$audio_file" "$9"
 fi
 
-# terminal
-# Create a temporary file
-TMPFILE=$(mktemp)
-
-echo "PS1=spleeter-cmd\>" > "$TMPFILE"
-echo "spleeter --help" >> "$TMPFILE"
-echo "rm -f $TMPFILE" >> "$TMPFILE"
-
-# execute new terminal
-gnome-terminal -- $SHELL --rcfile "$TMPFILE"
