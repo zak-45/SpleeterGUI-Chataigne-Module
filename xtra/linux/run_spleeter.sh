@@ -40,7 +40,8 @@ fi
 # Create a temporary file
 TMPFILE=$(mktemp)
 
-echo "PS1=spleeter\>" > "$TMPFILE"
+echo "PS1=spleeter-cmd\>" > "$TMPFILE"
+echo "spleeter --help" >> "$TMPFILE"
 echo "rm -f $TMPFILE" >> "$TMPFILE"
 
 # execute new terminal
