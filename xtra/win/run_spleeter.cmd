@@ -11,6 +11,16 @@ PATH=%USERPROFILE%\Documents\Chataigne\xtra\PySp3.10\Scripts;%PATH%
 Rem go to module xtra dir
 cd %USERPROFILE%\Documents\Chataigne\modules\SpleeterGUI-Chataigne-Module-main\xtra
 
+if "%1"=="cmd" goto :newshell
+
 python -m extract_tags %8
 
 if NOT "%1"=="mp3tags" spleeter.exe %1 %2 %3 %4 %5 %6 %7 %8 %9
+
+goto :end
+
+:newshell
+Rem start a new terminal for spleeter command line
+start;set prompt="spleeter\>"
+
+:end
