@@ -231,7 +231,20 @@ function moduleParameterChanged (param)
             util.showYesNoCancelBox("install", "Spleeter", "proceed with installation", ["question"] );
         }
 	}
-
+	if (param.name == "spleeterCommandLine") {
+		// Spleeter command
+		spleeterCMDName = local.parameters.spleeterParams.spleeterCommand.getAbsolutePath();
+		exeOpt = " cmd";
+		script.log(spleeterCMDName);
+		// check to see if Spleeter exe exist
+		if (util.fileExists(spleeterCMDName) == 1) {
+			// we execute the Spleeter command in non blocking mode
+			var launchresult = root.modules.os.launchProcess(spleeterCMDName + exeOPT, true);
+			script.log(launchresult);
+		} else {
+			script.log("file not exist");
+		}
+	}
 }
 
 function messageBoxCallback(id, value) {

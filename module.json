@@ -64,6 +64,10 @@
 				"type": "Boolean", 
 				"description": "Check to have verbose informations from Spleeter running process. ",
 				"default":true
+			},
+			"Spleeter Command Line": {
+				"type": "Trigger",
+				"description": "Click to open spleeter command line terminal"
 			}
 		}
 	},

@@ -21,6 +21,6 @@ goto :end
 
 :newshell
 Rem start a new terminal for spleeter command line
-start;set prompt="spleeter\>"
+start;set prompt="spleeter\>";spleeter
 
 :end
