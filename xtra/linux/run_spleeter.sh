@@ -9,6 +9,7 @@ export PATH="$HOME/Documents/Chataigne/xtra/PySp3.10/bin:$HOME/Documents/Chataig
 # Go to module xtra directory
 cd "$HOME/Documents/Chataigne/modules/SpleeterGUI-Chataigne-Module-main/xtra" || exit
 
+# echo variables
 echo "$1"
 echo "$2"
 echo "$3"
@@ -18,14 +19,14 @@ echo "$6"
 echo "$7"
 echo "$8"
 
-# replace '"' by '' (Chataigne problem)
+# replace '"' by '' (Chataigne on linux problem)
 audio_file=$(echo "$8" | sed -e "s/\"//g")
 export audio_file
 folder_name=$(echo "$5" | sed -e "s/\"//g")
 export folder_name
 
 echo "audio file : ${audio_file}"
-echo "folder output : ${folder_name}"
+echo "output folder : ${folder_name}"
 
 # extract mp3 tags
 python3 -m extract_tags "$audio_file"
