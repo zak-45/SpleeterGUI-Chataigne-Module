@@ -3,7 +3,7 @@
 	"type": "Empty",
 	"path": "Custom",
 	
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"description": "Music separation by Deezer / Spleeter.,,
 	 ** Portable version for win, linux_x86_64, macOs x86_64 **,
 	Need python / tensorflow / ffmpeg,

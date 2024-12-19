@@ -2,7 +2,7 @@
 
 author:	zak45
 date:	07/02/2023
-version:2.0.0
+version:2.1.0
 
 Chataigne Module for  Deezer /spleeter
 
