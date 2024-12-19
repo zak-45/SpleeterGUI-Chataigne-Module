@@ -4,7 +4,7 @@
 # Adapted for Linux
 
 # Set path to portable Python
-export PATH="$HOME/Documents/Chataigne/xtra/PySp3.10/bin:$HOME/Documents/Chataigne/xtra/PySp3.10/Scripts:$PATH"
+export PATH="$HOME/Documents/Chataigne/xtra/PySp3.10/bin:$PATH"
 
 # Go to module xtra directory
 cd "$HOME/Documents/Chataigne/modules/SpleeterGUI-Chataigne-Module-main/xtra" || exit
@@ -18,7 +18,6 @@ echo "$5"
 echo "$6"
 echo "$7"
 echo "$8"
-
 
 # terminal
 if [ "$1" == "cmd" ]; then
@@ -35,7 +34,7 @@ if [ "$1" == "cmd" ]; then
 fi
 
 
-# replace '"' by '' (Chataigne on linux problem)
+# replace '"' by '' (Chataigne on linux behaviour)
 audio_file=$(echo "$8" | sed -e "s/\"//g")
 export audio_file
 folder_name=$(echo "$5" | sed -e "s/\"//g")
