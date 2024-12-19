@@ -70,7 +70,6 @@ jobs:
           else
               echo "Adding to PATH"
               echo "PySp3.10/bin" >> $GITHUB_PATH
-              echo "PySp3.10/Scripts" >> $GITHUB_PATH
           fi
           PYTHONDONTWRITEBYTECODE=TRUE
         shell: bash
@@ -91,9 +90,9 @@ jobs:
       - name: Patch spleeter
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              python -m fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
+              python -m xtra\\fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
           else
-              python -m fix_shebang PySp3.10/bin/spleeter -o PySp3.10/bin
+              python -m xtra/fix_shebang PySp3.10/bin/spleeter -o PySp3.10/bin
           fi
         shell: bash
 
