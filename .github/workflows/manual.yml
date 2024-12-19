@@ -62,6 +62,7 @@ jobs:
           ls
           pwd
           ls xtra
+          env
         shell: bash
 
       - name: Set up environment path
