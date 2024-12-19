@@ -198,7 +198,7 @@ function update()
 		}
 		if (installIsRunning)
 		{
-			if (util.fileExists(fileToTest) && utils.directoryExists(dirToTest)) {
+			if (util.fileExists(fileToTest) && util.directoryExists(dirToTest)) {
 			    installIsRunning = false;
 			    util.showMessageBox("Spleeter", "install finished", "information", "ok");
 
