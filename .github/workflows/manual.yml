@@ -93,6 +93,7 @@ jobs:
 
       - name: Patch spleeter
         run: |
+          cd xtra
           if [ "${{ matrix.os_name }}" = "windows" ]; then
               python -m fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
           else
