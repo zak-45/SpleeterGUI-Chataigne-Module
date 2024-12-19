@@ -623,7 +623,7 @@ function runInstall() {
     	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/linux/install.sh", "");
 		script.log(launchresult);
 
-	} else if ( spOS.contains("maxOS") ) {
+	} else if ( spOS.contains("macOS") ) {
 
     	var launchresult = root.modules.os.launchApp(moduleDIR + "/xtra/mac/install.sh", "");
 		script.log(launchresult);
