@@ -23,6 +23,7 @@ var shouldProcessSpl = false;
 var shouldProcessInstall = false;
 var installIsRunning = false;
 var fileToTest = "";
+var dirToTest = "";
 
 var spOS = "";
 var homeDIR = "";
@@ -98,10 +99,8 @@ function init()
         {
             tempDIR="/tmp";
         }
-
-
 	}
-
+    dirToTest = homeDIR + "/xtra/PySp3.10/share";
 	moduleDIR = homeDIR + "/modules/SpleeterGUI-Chataigne-Module-main";
 
     script.log("Temp folder : "+tempDIR);
@@ -199,7 +198,7 @@ function update()
 		}
 		if (installIsRunning)
 		{
-			if (util.fileExists(fileToTest)) {
+			if (util.fileExists(fileToTest) && utils.directoryExists(dirToTest) {
 			    installIsRunning = false;
 			    util.showMessageBox("Spleeter", "install finished", "information", "ok");
 
