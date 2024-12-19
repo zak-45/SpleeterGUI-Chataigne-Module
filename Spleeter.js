@@ -323,7 +323,7 @@ function runSpleeter (sequence, targetFile, model)
 					
 		} else if (targetFile != ""){
 
-			var targetFile = root.modules.spleeter.commandTester.command.fileName.get();
+			var targetFile = root.modules.spleeter.commandTester.command.fileName.getAbsolutePath();
 			script.log('Create new sequence from filename :' + targetFile);
 			// create new sequence / audio clip 
 			var newSequence =  root.sequences.addItem('Sequence');	
