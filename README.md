@@ -66,11 +66,12 @@ Copy this repository to :
 From Chataigne
 ```
  Use module manager
-
+ Click on install to download SpleeterGUI chataigne module
 ```
 ![image](https://github.com/user-attachments/assets/2e373f89-43ae-4bb5-b45b-f3dff2842133)
 
 ```
+On Portable Python Installation:
  Click on install to download Spleeter Python Portable.
  Once done, you can use the Spleeter Command-line to open a Terminal and execute any spleeter command.
 
