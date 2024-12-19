@@ -94,9 +94,9 @@ jobs:
       - name: Patch spleeter
         run: |
           if [ "${{ matrix.os_name }}" = "windows" ]; then
-              python -m D:\\a\\SpleeterGUI-Chataigne-Module\\SpleeterGUI-Chataigne-Module\\xtra\\fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
+              python -m fix_shebang PySp3.10\\Scripts\\spleeter.exe -o PySp3.10\\Scripts         
           else
-              python -m /Users/runner/work/SpleeterGUI-Chataigne-Module/SpleeterGUI-Chataigne-Module/xtra/fix_shebang PySp3.10/bin/spleeter -o PySp3.10/bin
+              python -m fix_shebang PySp3.10/bin/spleeter -o PySp3.10/bin
           fi
         shell: bash
 
