@@ -104,9 +104,10 @@ zip file available for Win / Linux x86_64 / MacOS universal2
 On Inspector:
 	Spleeter command: command to execute
 		This is the full path for the command to launch. Need to be adapted to your needs/ installation.
-		Default command xtra/win/run_spleeter.cmd for Win
-		                xtra/mac/run_spleeter.sh for Mac
-                        xtra/linux/run_spleeter.sh for Linux		                
+		Default command adapted to python portable version:
+		    xtra/win/run_spleeter.cmd for Win
+		    xtra/mac/run_spleeter.sh for Mac 
+		    xtra/linux/run_spleeter.sh for Linux		                
 	Spleeter options : options to pass to the command
 		Options that will be passed to the executed command.
 	OutputFolder :Folder where to store separate audio tracks
