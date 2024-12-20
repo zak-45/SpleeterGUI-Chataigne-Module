@@ -90,10 +90,10 @@ Go to Modules, right click, Custom, Spleeter.
 
 
 ```
-To install Python Portable with spleeter module, use the Install button.
+To install Python Portable with spleeter module, use the Install button if not already done.
 This will do the necessary steps to put on your system a running spleeter python module
 
-zip file avaialble for Win / Linux x86_64 / MacOs universal2
+zip file available for Win / Linux x86_64 / MacOS universal2
 
 ```
 
@@ -104,6 +104,9 @@ zip file avaialble for Win / Linux x86_64 / MacOs universal2
 On Inspector:
 	Spleeter command: command to execute
 		This is the full path for the command to launch. Need to be adapted to your needs/ installation.
+		Default command xtra/win/run_spleeter.cmd for Win
+		                xtra/mac/run_spleeter.sh for Mac
+                        xtra/linux/run_spleeter.sh for Linux		                
 	Spleeter options : options to pass to the command
 		Options that will be passed to the executed command.
 	OutputFolder :Folder where to store separate audio tracks
@@ -112,7 +115,7 @@ On Inspector:
 	Force : force command execution
 		To optimize the process, SpleeterGUI will check if an already separation file exist and re-use it
 		This parameter will force spleeter to execute and overwrite existing files.
-	Verbose : provide more informations during command running.
+	Verbose : provide more informations during running command.
 ```
 
 ![image](https://user-images.githubusercontent.com/121941293/218341664-a9d52373-fab0-4e79-a63c-5c2423da645e.png)
