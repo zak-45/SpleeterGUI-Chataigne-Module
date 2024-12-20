@@ -137,7 +137,10 @@ On Command Tester, Spleeter: all SpleeterGUI available commands.
 ![image](https://user-images.githubusercontent.com/121941293/218443314-f2a20a5a-7beb-400d-81ec-988c7686a60a.png)
 
 ### -- INFO --
-This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 70 seconds to separate 3'30" audio track.Second run should be faster anymore.
+This is CPU intensive: on Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz   2.30 GHz, need 70 seconds to separate 3'30" audio track.
+Second run should be faster anymore.
+
+Each first time you select stem separation, this will automatically download required model if not exist.
 
 Not all spleeter features has been implemented. Focus has been set to the separate. SpleeterGUI need a mp3 file as input and produce a mp3 file as result. 
 
