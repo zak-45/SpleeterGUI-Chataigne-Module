@@ -14,7 +14,7 @@ You should be able to hear the song without bass, drums , vocals etc ...or only 
 This should work on all OS where Chataigne/Spleeter are supported (Win/macOS/Linux...)
 
 Windows / Linux / Mac users can have it running in few minutes.
-> You do not need to install python or spleeter, this is a portable version of python pre-loaded with spleeter.
+> You do not need to install python or spleeter, this is a portable version of python preloaded with spleeter.
 
 ### *** Videos DEMO ***
 
