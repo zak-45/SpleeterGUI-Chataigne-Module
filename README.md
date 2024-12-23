@@ -93,7 +93,7 @@ Go to Modules, right click, Custom, Spleeter.
 To install Python Portable with spleeter module, use the Install button if not already done.
 This will do the necessary steps to put on your system a running spleeter python module
 
-zip file available for Win / Linux x86_64 / MacOS universal2
+zip file available for Win / Linux x86_64 / MacOS universal2 (intel)
 
 ```
 
