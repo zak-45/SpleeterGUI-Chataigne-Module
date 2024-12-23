@@ -3,7 +3,7 @@ import taglib
 import sys
 
 def extract_mp3_tags(file_name):
-    """Extract MP3 tags from a audio file and save them to a JSON file.
+    """Extract MP3 tags from an audio file and save them to a JSON file.
 
     This function reads the tags from the specified MP3 file and writes
     the extracted information into a JSON file named 'song_tags_info.json'.
