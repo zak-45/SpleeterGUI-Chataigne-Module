@@ -28,10 +28,10 @@ jobs:
         include:
           - os: macos-13
             os_name: darwin
-            os_arch: universal2
-          # - os: macos-latest
-          #   os_name: darwin
-          #   os_arch: universal2
+            os_arch: x86_64
+          - os: macos-latest
+            os_name: darwin
+            os_arch: silicon
           - os: ubuntu-latest
             os_name: linux
             os_arch: x86_64
