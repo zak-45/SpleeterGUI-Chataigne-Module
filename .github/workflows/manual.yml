@@ -58,11 +58,6 @@ jobs:
           else
             unzip python-portable-${{ matrix.os_name }}-${{ matrix.os_arch }}.zip -d sp-${{ matrix.os_name }}-${{ matrix.os_arch }}
             mv sp-${{ matrix.os_name }}-${{ matrix.os_arch }}/python-headless-3.10.15-${{ matrix.os_name }}-${{ matrix.os_arch }} PySp3.10
-          fi
-          ls
-          pwd
-          ls xtra
-          env
         shell: bash
 
       - name: Set up environment path
