@@ -78,8 +78,8 @@ jobs:
 
       - name: Install numpy / pytaglib
         run: |
-          python -m pip install numpy==1.26.0
-          python -m pip install pytaglib
+          pip install numpy==1.26.0
+          pip install pytaglib
 
       - name: Install spleeter
         run: python -m pip install spleeter
