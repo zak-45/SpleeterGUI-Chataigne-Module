@@ -22,7 +22,7 @@ Windows / Linux / Mac users can have it running in few minutes.
 https://youtu.be/ozxjISq9duE
 > SpleeterGUI installation :
 
-![img_1.png](https://youtu.be/ozxjISq9duE)
+![https://youtu.be/ozxjISq9duE](img_1.png)
 
 https://user-images.githubusercontent.com/121941293/219706114-4a899a6c-35b6-47ac-8f9e-27b58ce189e4.mp4
 > 2 stems
