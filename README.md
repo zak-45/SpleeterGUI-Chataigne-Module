@@ -17,6 +17,8 @@ This should work on all OS where Chataigne/Spleeter are supported (Win/macOS/Lin
 
 Windows / Linux / Mac users can have it running in few minutes.
 > You do not need to install python or spleeter, this is a portable version of python preloaded with spleeter.
+> 
+> https://github.com/zak-45/SpleeterGUI-Chataigne-Module/releases
 
 ### *** Videos DEMO ***
 
