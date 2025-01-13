@@ -153,6 +153,8 @@ Second run should be faster anymore.
 Not all spleeter features has been implemented. Focus has been set to the separate. SpleeterGUI need a mp3 file as input and produce mp3 files as result. 
 
 All others commands can be executed by using spleeter command line if necessary.
+![image](https://github.com/zak-45/SpleeterGUI-Chataigne-Module/raw/main/img.png)
+
 
 Spleeter WIKI : https://github.com/deezer/spleeter/wiki/2.-Getting-started
 
