@@ -540,6 +540,7 @@ function runSpleeter (sequence, targetFile, model)
 function spTmpPath ()
 {
 	script.log("Retreive temp folder");
+	tempDIR = "";
 	// TMP, TMPDIR, and TEMP environment variables 
 	var pathTMP = util.getEnvironmentVariable("TMP");
 	var pathTMPDIR = util.getEnvironmentVariable("TMPDIR");	
@@ -559,10 +560,8 @@ function spTmpPath ()
 		return tempDIR;	
 	}
 
+	script.log('WARNING temp directory not found');
 
-	script.log('ERROR temp directory not found');
-	script.logError("Something wrong with Spleeter....");
-	
 return tempDIR;
 }
 
